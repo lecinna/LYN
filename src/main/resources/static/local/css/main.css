@@ -1,0 +1,188 @@
+a:active {
+    color: lightgoldenrodyellow;
+}
+a:visited {
+    color: lightyellow;
+}
+
+#msg{
+    color: red;
+    height: 6vh;
+    vertical-align: bottom;
+}
+
+.nav{
+    width: 1620px;
+    height:50px;
+    font: bold 22px "宋体" ;
+    color: lightgoldenrodyellow;
+    padding-top: 60px;
+    position:relative;
+    top: 0px;
+    left: 15px;
+}
+.nav > li {
+    position: relative;
+    margin-right: 30px;
+}
+.navCon{
+    width: 1600px;
+    height: 50px;
+    position: absolute;
+    top:-50px;
+    left: -20px;
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+}
+.navCon li{
+    list-style: none;
+    width: 180px;
+    height: 50px;
+    padding: 0px 23px;
+    line-height: 50px;
+    float: left;
+    color:lavender;
+    text-align: left;
+    position:relative;
+    top: -30px;
+    left: 0px;
+}
+/* 下拉 */
+.dropdown {
+    display: inline-block;
+    position: relative;
+}
+
+.dropdown .dropbtn {
+    color: lavender;
+    text-decoration: none;
+    display: block;
+    padding: 0;
+    cursor: pointer;
+    z-index: 200;
+    width: 100%;
+    height: 100%;
+    line-height: 50px;
+}
+
+/* 下拉内容默认隐藏 */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top:50px;
+    left: 0;
+    min-width: 180px;
+    background:linear-gradient(135deg, #FFD569 0%, #B0DCE6 100%);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    z-index: 1000;
+    border-radius: 0 0 4px 4px;
+    overflow: hidden;
+}
+
+.dropdown-content a {
+    color: #333;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+    transition: background-color 0.3s;
+    border: none;
+    line-height: normal;
+    height: auto;
+}
+
+.dropdown-content a:hover {
+    background-color: #FFA500;
+}
+
+/* 悬停时显示下拉菜单 */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+table{
+    border:#150909 1px solid;
+    height: 450px;
+}
+table tr{
+    height: 45px;
+}
+.bg2{
+    background-color:#150909;
+}
+#logout,#uName,#bthFresh{
+    float: right;
+    text-align: center;
+}
+input[type="submit"]{
+    cursor:pointer;
+}
+input,select,textarea{
+    border:#150909 1px solid;
+}
+#top{
+    text-align: right;
+    height: 60px;
+    background-color:#150909;
+}
+#bottom{
+    background-color:#150909;
+    text-align: center;
+    height: 30px;
+    width: 1400px;
+    position: absolute;
+    margin-left: -80px;
+    top: 803px;
+}
+
+#middle{
+    height: 3000px;
+    clear: both;
+}
+#left{
+    width: 15vw;
+    font: bold 22px "宋体";
+    background-color:#150909;
+    height:705px;
+    padding-top: 60px;
+}
+#left>ul>li{
+    list-style: none;
+    line-height: 60px;
+    padding-left: 10px;
+}
+#left a{
+    text-decoration: none;
+    color:aliceblue;
+}
+#left>ul>li>a{
+    text-decoration: none;
+    color:honeydew;
+}
+#left>ul>li>a:hover{
+    font: bold 25px "宋体";
+    color: honeydew;
+}
+#left,#right{
+    float:left;
+}
+#right{
+    padding:10px 40px;
+    margin:0 auto;
+}
+.display_none{
+    display: none;
+}
+.wrap li{
+    list-style: square;
+    font: bold 16px "宋体";
+    line-height:25px;
+}
+.wrap{
+    display: none;
+}
+.trbg{
+    background-color: #eeeeee;
+}
+span{
+    padding-left: 5px;
+}
+

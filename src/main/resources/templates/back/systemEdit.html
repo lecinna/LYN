@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <title>系统管理编辑</title>
+    <link rel="stylesheet" th:href="@{/local/css/backManage.css}">
+    <link rel="stylesheet" th:href="@{/local/css/system.css}">
+    <link rel="stylesheet" th:href="@{/local/css/introduce.css}">
+</head>
+<body>
+<div id="manager"><h2>LYN系统后台管理</h2></div>
+<div id="top" th:fragment="top">
+    <input id="bthFresh" type="button" value="刷新">
+    <br>
+    <form th:action="@{/admin/doLogin}">
+        <input id="logout" type="submit" value="退出登录">
+    </form>
+</div>
+<div id="left" th:fragment="left">
+    <div class="nav">
+        <ul class="navCon">
+            <li><a th:href="@{/loginBack/first}">首页</a></li>
+            <li>
+                <div class="dropdown">
+                    <a th:href="@{/loginBack/back/introduce}" class="dropbtn">个人介绍</a>
+                    <div class="dropdown-content">
+                        <a th:href="@{#}" target="_parent" title="introduce">个人介绍</a>
+                        <a th:href="@{/loginBack/back/perform}" target="_parent" title="performance">演艺经历</a>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="dropdown">
+                    <a th:href="@{/loginBack/back/music}" class="dropbtn">音乐作品</a>
+                    <div class="dropdown-content">
+                        <a th:href="@{/loginBack/back/ost}" target="_parent" title="ost">OST</a>
+                        <a th:href="@{/loginBack/back/ep}" target="_parent" title="ep">专辑</a>
+                        <a th:href="@{/loginBack/back/single}" target="_parent" title="single">单曲</a>
+                    </div>
+                </div>
+            </li>
+            <li><a th:href="@{/loginBack/back/action}">影视作品</a></li>
+            <li><a th:href="@{/loginBack/back/word}">经典语录</a></li>
+            <li>
+                <div class="dropdown">
+                    <a th:href="@{/loginBack/back/prize}" class="dropbtn">代言及奖项</a>
+                    <div class="dropdown-content" >
+                        <a th:href="@{/loginBack/back/endorsement}" target="_parent" title="endorsement">代言</a>
+                        <a th:href="@{/loginBack/back/achievement}" target="_parent" title="achievement">奖项</a>
+                    </div>
+                </div>
+            </li>
+            <li><a th:href="@{/loginBack/back/message}">评价管理</a></li>
+            <li><a th:href="@{/loginBack/back/system}">系统管理</a></li>
+        </ul>
+    </div>
+</div>
+<div class="content-area">
+    <div id="msg" th:text="${msg}"></div>
+    <form th:action="@{/loginBack/back/updateSystem}" method="post">
+        <box type="text">
+            <span>修改记录</span>
+        </box>
+        <input type="hidden" name="adminId" th:value="${admin.adminId}">
+        <table id="addTable" class="data-table">
+            <tr>
+                <td>序号</td>
+                <td><input type="text" name="adminId" th:value="${admin.adminId}"></td>
+            </tr>
+            <tr>
+                <td>用户名</td>
+                <td><input type="text" name="username" th:value="${admin.username}"></td>
+            </tr>
+            <tr>
+                <td>密码</td>
+                <td><input type="password" name="password" th:value="${admin.password}"></td>
+            </tr>
+            <tr>
+                <td>邮箱</td>
+                <td><input type="text" name="email" th:value="${admin.email}"></td>
+            </tr>
+            <tr>
+                <td>手机号码</td>
+                <td><input type="tel" name="phone" th:value="${admin.phone}"></td>
+            </tr>
+            <tr>
+                <td>上次登录时间</td>
+                <td><input type="datetime-local" name="lastLogin" th:value="${admin.lastLogin}"></td>
+            </tr>
+            <tr>
+                <td>状态</td>
+                <td>
+                    <select name="status" th:value="${admin.status}">
+                        <option value="1">正常</option>
+                        <option value="0">禁用</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>注册时间</td>
+                <td><input type="datetime-local" name="createTime" th:value="${admin.createTime}"></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input id="btngoBack" type="button" value="返回" th:onclick="|window.location.href='@{/loginBack/back/system}'|">
+                    <input type="reset" value="重置">
+                    <input type="submit" value="提交">
+                </td>
+            </tr>
+        </table>
+    </form>
+<div id="bottom">底部</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,195 @@
+.container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.3);
+    padding: 50px 40px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    width: 620px;
+    max-width: 90%;
+    z-index: 1;
+    backdrop-filter: blur(10px);
+}
+
+/* 全局重置 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    position: relative;
+}
+
+/* 背景图像容器 */
+.background-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.background-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 标题 */
+.container h2 {
+    color: #333;
+    margin-bottom: 25px;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+/* 消息提示 */
+#msg {
+    color: #ff4757;
+    margin: 10px 0;
+    font-size: 14px;
+    min-height: 20px;
+}
+
+/* 表单 */
+form {
+    margin-top: 20px;
+}
+
+/* 输入组 */
+.input-group {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px 15px 12px 40px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.input-group input:focus {
+    border-color: lightgoldenrodyellow;
+    box-shadow: 0 0 5px lightgoldenrodyellow;
+}
+
+/* 图标 */
+.icon-user, .icon-lock {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: lightgoldenrodyellow;
+}
+
+.icon-user::before {
+    content: "👤";
+}
+
+.icon-lock::before {
+    content: "🔒";
+}
+
+/* 角色选择 */
+.role-selection {
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.role-selection label {
+    font-size: 15px;
+    color: #555;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.role-selection input[type="radio"] {
+    cursor: pointer;
+    width: 18px;
+    height: 18px;
+}
+
+/* 登录按钮 */
+.login-button {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg,lemonchiffon,lightblue);
+    color: black;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.login-button:hover {
+    background: linear-gradient(135deg,lemonchiffon,lightblue);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(78, 205, 196, 0.4);
+}
+
+.login-button:active {
+    transform: translateY(0);
+}
+
+/* 注册链接 */
+.register-link {
+    display: inline-block;
+    margin-top: 15px;
+    color: black;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+
+.register-link:hover {
+    color: #45b39d;
+    text-decoration: underline;
+}
+
+/* 返回首页按钮 */
+.back-home {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 2;
+}
+
+.back-home a {
+    display: inline-block;
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.9);
+    color: black;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    border: 2px solid lightblue;
+}
+
+.back-home a:hover {
+    background: #4ecdc4;
+    color: white;
+    transform: scale(1.05);
+}

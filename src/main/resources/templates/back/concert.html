@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>演唱会</title>
+    <link rel="stylesheet" th:href="@{/local/css/backManage.css}">
+    <link rel="stylesheet" th:href="@{/local/css/concert.css}">
+    <link rel="stylesheet" th:href="@{/local/css/page.css}">
+</head>
+<body>
+<div id="manager"><h2>LYN系统后台管理</h2></div>
+<div id="top" th:fragment="top">
+    <input id="bthFresh" type="button" value="刷新">
+    <form th:action="@{/admin/login}">
+        <input id="logout" type="submit" value="退出登录">
+    </form>
+</div>
+<div id="left" th:fragment="left">
+    <div class="nav">
+        <ul class="navCon">
+            <li><a th:href="@{/loginBack/first}">首页</a></li>
+            <li>
+                <div class="dropdown">
+                    <a th:href="@{/loginBack/back/introduce}" class="dropbtn">个人介绍</a>
+                    <div class="dropdown-content">
+                        <a th:href="@{/loginBack/back/introduce }" target="_parent" title="introduce">个人介绍</a>
+                        <a th:href="@{/loginBack/back/perform}" target="_parent" title="performance">演艺经历</a>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="dropdown">
+                    <a th:href="@{/login/back/musicWork}" class="dropbtn">音乐作品</a>
+                    <div class="dropdown-content">
+                        <a th:href="@{/loginBack/back/ost}" target="_parent" title="ost">OST</a>
+                        <a th:href="@{/loginBack/back/ep}" target="_parent" title="ep">专辑</a>
+                        <a th:href="@{/loginBack/back/single}" target="_parent" title="single">单曲</a>
+                    </div>
+                </div>
+            </li>
+            <li><a th:href="@{/loginBack/back/action}">影视作品</a></li>
+            <li><a th:href="@{/loginBack/back/word}">经典语录</a></li>
+            <li>
+                <div class="dropdown">
+                    <a th:href="@{/loginBack/back/prize}" class="dropbtn">代言及奖项</a>
+                    <div class="dropdown-content" >
+                        <a th:href="@{/loginBack/back/endorsement}" target="_parent" title="endorsement">代言</a>
+                        <a th:href="@{/loginBack/back/achievement}" target="_parent" title="achievement">奖项</a>
+                    </div>
+                </div>
+            </li>
+            <li><a th:href="@{#}">演唱会</a></li>
+            <li><a th:href="@{/loginBack/back/message}">评价管理</a></li>
+            <li><a th:href="@{/loginBack/back/system}">系统管理</a></li>
+        </ul>
+    </div>
+</div>
+<div class="content-area">
+    <div id="title" th:text="${title}"></div>
+    <div class="toolbar">
+        <form th:action="@{/loginBack/back/toAdd}" method="get">
+            <button type="submit" class="btn-add">
+                <span>+添加事件</span>
+            </button>
+        </form>
+    </div>
+
+<table>
+    <thead>
+    <tr>
+        <th>名称</th>
+        <th>城市</th>
+        <th>地点</th>
+        <th>日期</th>
+        <th>时间</th>
+        <th>描述</th>
+        <th>图片</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tr th:each="item : ${concertPage.list}">
+        <td th:text="${item.title}"></td>
+        <td th:text="${item.city}"></td>
+        <td th:text="${item.venue}"></td>
+        <td th:text="${item.date}"></td>
+        <td th:text="${item.description}"></td>
+        <td><img class="listimg"  style="width:50px;height:50px" th:src="@{${item.image}}"></td>
+
+        <td>
+            <a th:href="@{/loginBack/delConcert?title=${item.title}}"
+            onclick="return confirm('确定要删除吗？')">删除</a>
+            <a th:href="'/loginBack/back/toEdit?id=' + ${item.id}">修改</a>
+        </td>
+    </tr>
+</table>
+<div class="pagination-container" th:if="${concertPage != null and concertPage.pages > 0}">
+    <div class="pagination-info">
+        <div>
+            当前是第 <span th:text="${concertPage.pageNum}"></span> 页
+            共 <span th:text="${concertPage.pages}"></span> 页
+            共 <span th:text="${concertPage.total}"></span> 条记录
+        </div>
+        <ul class="pagelist">
+            <li><a th:href="'/admin/concert?pageNum=1'">首页</a></li>
+            <li th:if="${concertPage.hasPreviousPage}">
+                <a th:href="'/admin/concert?pageNum=' + ${concertPage.prePage}">上一页</a>
+            </li>
+            <li th:if="${concertPage.hasNextPage}">
+                <a th:href="'/admin/concert?pageNum=' + ${concertPage.nextPage}">下一页</a>
+            </li>
+            <li><a th:href="'/admin/concert?pageNum=' + ${concertPage.pages}">尾页</a></li>
+        </ul>
+    </div>
+</div>
+</div>
+</body>
+</html>

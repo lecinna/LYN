@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>专辑</title>
+    <link rel="stylesheet" th:href="@{/local/css/backManage.css}">
+    <link rel="stylesheet" th:href="@{/local/css/ep.css}">
+    <link rel="stylesheet" th:href="@{/local/css/page.css}">
+</head>
+<body>
+<div id="manager"><h2>LYN系统后台管理</h2></div>
+<div id="top" th:fragment="top">
+    <input id="bthFresh" type="button" value="刷新">
+    <form th:action="@{/admin/doLogin}">
+        <input id="logout" type="submit" value="退出登录">
+    </form>
+</div>
+<div id="left" th:fragment="left">
+    <div class="nav">
+        <ul class="navCon">
+            <li><a th:href="@{/loginBack/first}">首页</a></li>
+            <li>
+                <div class="dropdown">
+                    <a th:href="@{/loginBack/back/introduce}" class="dropbtn">个人介绍</a>
+                    <div class="dropdown-content">
+                        <a th:href="@{/loginBack/back/introduce}" target="_parent" title="introduce">个人介绍</a>
+                        <a th:href="@{#}" target="_parent" title="performance">演艺经历</a>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="dropdown">
+                    <a th:href="@{/loginBack/back/musicWork}" class="dropbtn">音乐作品</a>
+                    <div class="dropdown-content">
+                        <a th:href="@{/loginBack/back/ost}" target="_parent" title="ost">OST</a>
+                        <a th:href="@{#}" target="_parent" title="ep">专辑</a>
+                        <a th:href="@{/loginBack/back/single}" target="_parent" title="single">单曲</a>
+                    </div>
+                </div>
+            </li>
+            <li><a th:href="@{/loginBack/back/action}">影视作品</a></li>
+            <li><a th:href="@{/loginBack/back/word}">经典语录</a></li>
+            <li>
+                <div class="dropdown">
+                    <a th:href="@{/loginBack/back/prize}" class="dropbtn">代言及奖项</a>
+                    <div class="dropdown-content" >
+                        <a th:href="@{/loginBack/back/endorsement}" target="_parent" title="endorsement">代言</a>
+                        <a th:href="@{/loginBack/back/achievement}" target="_parent" title="achievement">奖项</a>
+                    </div>
+                </div>
+            </li>
+            <li><a th:href="@{/loginBack/back/message}">评价管理</a></li>
+            <li><a th:href="@{/loginBack/back/system}">系统管理</a></li>
+        </ul>
+    </div>
+</div>
+<div id="perId" th:text="${eId}"></div>
+<div class="content-area">
+    <div class="toolbar">
+        <form th:action="@{/loginBack/back/toAddEp}" method="get">
+            <button type="submit" class="btn-add">
+                <span>+ 添加专辑</span>
+            </button>
+        </form>
+    </div>
+    <table class="data-table">
+    <thead>
+    <tr>
+        <th>专辑ID</th>
+        <th>专辑名称</th>
+        <th>歌曲名称</th>
+        <th>时间</th>
+        <th>专辑介绍</th>
+        <th>图片</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+        <tbody>
+        <tr th:each="item : ${ep}">
+            <td th:text="${item.eId}"></td>
+            <td th:text="${item.name}"></td>
+            <td th:text="${item.sname}"></td>
+            <td th:text="${item.time}"></td>
+            <td th:text="${item.description}"></td>
+            <td th:text="${item.image}"></td>
+            <td>
+                <a th:href="@{'/loginBack/delEp?eId='+${item.eId}}">删除</a>
+                <a th:href="@{'/loginBack/back/toEditEp?eId='+${item.eId}}">修改</a>
+            </td>
+             </tr>
+        </tbody>
+    </table>
+</div>
+<div id="bottom">底部</div>
+</body>
+</html>

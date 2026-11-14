@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <style type="text/css">
+        .content-area {
+            margin-left: 180px;
+            padding: 20px 30px;
+            min-height: calc(100vh - 90px);
+            width: 1360px;
+            position: absolute;
+            top: 100px;
+            left: 50px;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <title>OST</title>
+    <link rel="stylesheet" th:href="@{/local/css/backManage.css}">
+    <link rel="stylesheet" th:href="@{/local/css/single.css}">
+    <link rel="stylesheet" th:href="@{/local/css/page.css}">
+</head>
+<body>
+<div id="manager"><h2>LYN系统后台管理</h2></div>
+<div id="top" th:fragment="top">
+    <input id="bthFresh" type="button" value="刷新">
+    <form th:action="@{/admin/doLogin}">
+        <input id="logout" type="submit" value="退出登录">
+    </form>
+</div>
+<div id="left" th:fragment="left">
+    <div class="nav">
+        <ul class="navCon">
+            <li><a th:href="@{/loginBack/first}">首页</a></li>
+            <li>
+                <div class="dropdown">
+                    <a th:href="@{/loginBack/back/introduce}" class="dropbtn">个人介绍</a>
+                    <div class="dropdown-content">
+                        <a th:href="@{/loginBack/back/introduce}" target="_parent" title="introduce">个人介绍</a>
+                        <a th:href="@{/loginBack/back/perform}" target="_parent" title="performance">演艺经历</a>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="dropdown">
+                    <a th:href="@{/login/back/music}" class="dropbtn">音乐作品</a>
+                    <div class="dropdown-content">
+                        <a th:href="@{/loginBack/back/ost}" target="_parent" title="ost">OST</a>
+                        <a th:href="@{/loginBack/back/ep}" target="_parent" title="ep">专辑</a>
+                        <a th:href="@{/loginBack/back/single}" target="_parent" title="single">单曲</a>
+                    </div>
+                </div>
+            </li>
+            <li><a th:href="@{/loginBack/back/action}">影视作品</a></li>
+            <li><a th:href="@{/loginBack/back/word}">经典语录</a></li>
+            <li>
+                <div class="dropdown">
+                    <a th:href="@{/loginBack/back/prize}" class="dropbtn">代言及奖项</a>
+                    <div class="dropdown-content" >
+                        <a th:href="@{/loginBack/back/endorsement}" target="_parent" title="endorsement">代言</a>
+                        <a th:href="@{/loginBack/back/achievement}" target="_parent" title="achievement">奖项</a>
+                    </div>
+                </div>
+            </li>
+            <li><a th:href="@{/loginBack/back/message}">评价管理</a></li>
+            <li><a th:href="@{/loginBack/back/system}">系统管理</a></li>
+        </ul>
+    </div>
+</div>
+<div class="content-area">
+    <div id="msg" th:text="${msg}"></div>
+    <form th:action="@{/loginBack/back/updateSingle}" method="post">
+        <box type="text" style="position: absolute;top: -50px;">
+            <span>修改记录</span>
+        </box>
+        <input type="hidden" name="singleId" th:value="${single.singleId}">
+        <table id="addTable" class="data-table">
+            <tr>
+                <th>单曲名称</th>
+                <td><input type="text" name="name" th:value="${single.name}"></td>
+            </tr>
+            <tr>
+                <th>单曲音乐</th>
+                <td><input type="video" name="music" th:value="${single.music}"></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input id="btngoBack" type="button" value="返回" th:onclick="|window.location.href='@{/loginBack/back/single}'|">
+                    <input type="reset" value="重置">
+                    <input type="submit" value="提交">
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+<div id="bottom">底部</div>
+</body>
+</html>

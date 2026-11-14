@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <title>后台管理</title>
+    <link rel="stylesheet" th:href="@{/local/css/backManage.css}">
+</head>
+ <body>
+ <div id="left" th:fragment="left">
+     <div class="nav">
+         <ul class="navCon">
+             <li><a th:href="@{/loginBack/first}">首页</a></li>
+             <li>
+                 <div class="dropdown">
+                     <a th:href="@{/loginBack/back/introduce}" class="dropbtn">个人介绍</a>
+                     <div class="dropdown-content">
+                         <a th:href="@{#}" target="_parent" title="introduce">个人介绍</a>
+                         <a th:href="@{/loginBack/back/perform}" target="_parent" title="performance">演艺经历</a>
+                     </div>
+                 </div>
+             </li>
+             <li>
+                 <div class="dropdown">
+                     <!--<a th:href="@{/admin/music}" class="dropbtn"></a>-->
+                     音乐作品
+                     <div class="dropdown-content">
+                         <a th:href="@{/loginBack/back/ost}" target="_parent" title="ost">OST</a>
+                         <a th:href="@{/loginBack/back/ep}" target="_parent" title="ep">专辑</a>
+                         <a th:href="@{/loginBack/back/single}" target="_parent" title="single">单曲</a>
+                     </div>
+                 </div>
+             </li>
+             <li><a th:href="@{/loginBack/back/action}">影视作品</a></li>
+             <li><a th:href="@{/loginBack/back/word}">经典语录</a></li>
+             <li>
+                 <div class="dropdown">
+                     <!-- <a th:href="@{/admin/prize}" class="dropbtn"></a>-->
+                     代言及奖项
+                     <div class="dropdown-content" >
+                         <a th:href="@{/loginBack/back/endorsement}" target="_parent" title="endorsement">代言</a>
+                         <a th:href="@{/loginBack/back/achievement}" target="_parent" title="achievement">奖项</a>
+                     </div>
+                 </div>
+             </li>
+             <li><a th:href="@{/loginBack/back/message}">评价管理</a></li>
+             <li><a th:href="@{/loginBack/back/system}">系统管理</a></li>
+         </ul>
+     </div>
+ </div>
+ <div id="bottom">底部</div>
+ </body>
+</html>

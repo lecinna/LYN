@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <style type="text/css">
+        .fixed-user-area {
+            position: fixed;
+            top: 15px;
+            right: 25px;
+            z-index: 9999;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .fixed-user-area a {
+            text-decoration: none;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            backdrop-filter: blur(12px);
+            background: rgba(0, 0, 0, 0.55);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .fixed-user-area a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        /* 登录按钮 */
+        .fixed-user-area .login-btn {
+            color: #fff;
+            border: 1px solid rgba(102, 126, 234, 0.5);
+        }
+        .fixed-user-area .login-btn:hover {
+            background: #667eea;
+            border-color: #667eea;
+            color: #fff;
+        }
+
+        /* 退出按钮 */
+        .fixed-user-area .logout-btn {
+            color: #fff;
+            border: 1px solid rgba(231, 76, 60, 0.5);
+        }
+        .fixed-user-area .logout-btn:hover {
+            background: #e74c3c;
+            border-color: #e74c3c;
+            color: #fff;
+        }
+
+        /* 后台管理按钮 */
+        .fixed-user-area .admin-btn {
+            color: #FFD700;
+            border: 1px solid rgba(255, 215, 0, 0.5);
+        }
+        .fixed-user-area .admin-btn:hover {
+            background: #FFD700;
+            border-color: #FFD700;
+            color: #0a0a0a;
+        }
+
+        /* ===== 响应式（手机端适配） ===== */
+        @media (max-width: 768px) {
+            .fixed-user-area {
+                top: 10px;
+                right: 10px;
+                gap: 6px;
+            }
+            .fixed-user-area a {
+                font-size: 11px;
+                padding: 4px 12px;
+            }
+        }
+
+
+        .pagination-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .pagination-info {
+            color: #666;
+            font-size: 14px;
+            position: absolute;
+            bottom: 150px;
+            left: -50px;
+        }
+
+        .pagination-info span {
+            color: #667eea;
+            font-weight: 600;
+            margin: 0 3px;
+        }
+
+        /*.pagelist {
+            display: flex;
+            gap: 8px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }*/
+        .pagelist {
+            display: flex;
+            gap: 8px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            justify-content: center;  /* 👈 新增居中 */
+        }
+
+        .pagelist li a {
+            padding: 8px 14px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            text-decoration: none;
+            color: #666;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .pagelist li a:hover {
+            background: linear-gradient(135deg, #FFD569 0%, #B0DCE6 100%);
+            color: white;
+            border-color: #667eea;
+        }
+        /* 平台标签 */
+        .platform-tag {
+            display: inline-block;
+            font-size: 10px;
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-left: 8px;
+            color: white;
+            font-weight: 600;
+        }
+        .platform-tag.netease {
+            background: #c20c0c;  /* 网易云红 */
+        }
+        .platform-tag.tencent {
+            background: #00dc64;  /* QQ音乐绿 */
+            color: #333;
+        }
+        .platform-tag.kugou {
+            background: #ff6f00;  /* 酷狗橙 */
+        }
+    </style>
+    <meta charset="UTF-8">
+    <title>OST</title>
+    <link rel="stylesheet" th:href="@{/local/css/main.css}">
+    <link rel="stylesheet" th:href="@{/local/css/ost.css}">
+    <link rel="stylesheet" th:href="@{/local/css/page.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
+</head>
+</head>
+<body>
+<div class="background-image">
+    <img th:src="@{/local/image/photos/06.jpg}" alt="首页主图" width="1635px" height="800px">
+    <div class="fixed-user-area">
+        <li th:if="${session.userRole != null and session.userRole == 'admin'}" style="list-style:none;">
+            <a th:href="@{/backFirst/first}" class="admin-btn">⚙️ 后台管理</a>
+        </li>
+        <li th:if="${session.userRole == null}" style="list-style:none;">
+            <a th:href="@{/admin/login}" class="login-btn">🔑 登录</a>
+        </li>
+        <li th:if="${session.userRole != null}" style="list-style:none;">
+            <a th:href="@{/admin/logout}" class="logout-btn">🚪 退出</a>
+        </li>
+    </div>
+</div>
+<div class="nav">
+    <ul class="navCon">
+        <h2>
+            <li class="dropdown">
+                <a th:href="@{/admin/index}" class="dropbtn">个人介绍</a>
+                <div class="dropdown-content">
+                    <a th:href="@{/admin/index}">个人介绍</a>
+                    <a th:href="@{/admin/performance}">演艺经历</a>
+                </div>
+            </li>
+            <li class="dropdown">
+                <!--<a th:href="@{/admin/music}" class="dropbtn"></a>-->
+                音乐作品
+                <div class="dropdown-content">
+                    <a th:href="@{#}">OST</a>
+                    <a th:href="@{/admin/music/ep}">专辑</a>
+                    <a th:href="@{/admin/music/single}">单曲</a>
+                </div>
+            </li>
+            <li><a th:href="@{/admin/action}">影视作品</a></li>
+            <li><a th:href="@{/admin/word}">经典语录</a></li>
+            <li class="dropdown">
+                <!-- <a th:href="@{/admin/prize}" class="dropbtn"></a>-->
+                代言及奖项
+                <div class="dropdown-content">
+                    <a th:href="@{/admin/prize/endorsement}">代言</a>
+                    <a th:href="@{/admin/prize/achievement}">奖项</a>
+                </div>
+            </li>
+            <li><a th:href="@{/admin/concert}">演唱会</a></li>
+            <li><a th:href="@{/admin/message}">留言</a></li>
+            <!-- 👇 只有管理员才显示后台管理 -->
+            <!--<li th:if="${session.userRole != null and session.userRole == 'admin'}">
+                <a th:href="@{/admin/doLogin}">后台管理</a>
+            </li>-->
+        </h2>
+    </ul>
+</div>
+<h1  style="text-align: center; color: #333; margin-top: 50px;">原声带</h1>
+<h3 style="text-align: center; color: #666; margin-bottom: 30px;">Original Sound Track</h3>
+<div class="music-player" id="musicPlayer">
+    <div class="player-container">
+        <div class="player-info">
+            <div class="disc-animation" id="discAnimation">
+                <div class="disc">
+                    <div class="disc-center"></div>
+                </div>
+            </div>
+            <div class="song-details">
+                <div class="current-song-name" id="currentSongName">未播放</div>
+                <div class="current-opera-name" id="currentOperaName">选择一首歌曲开始播放</div>
+            </div>
+        </div>
+        <div class="player-controls">
+            <button class="control-btn" id="prevBtn" title="上一首">
+                <span>⏮</span>
+            </button>
+            <button class="control-btn play-btn" id="playBtn" title="播放/暂停">
+                <span id="playIcon">▶</span>
+            </button>
+            <button class="control-btn" id="nextBtn" title="下一首">
+                <span>⏭</span>
+            </button>
+            <div class="volume-control">
+                <span class="volume-icon">🔊</span>
+                <input type="range" id="volumeSlider" min="0" max="100" value="80" class="volume-slider">
+            </div>
+        </div>
+        <div class="progress-bar">
+            <span class="current-time" id="currentTime">0:00</span>
+            <div class="progress-track" id="progressTrack">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <span class="total-time" id="totalTime">0:00</span>
+        </div>
+    </div>
+    <audio id="audioPlayer" preload="auto"></audio>
+</div>
+
+<!-- OST 列表 -->
+<div class="ost-container">
+    <!-- 提示 -->
+    <div style="text-align:center;padding:15px;background:#f0f4ff;border-radius:10px;margin-bottom:20px;color:#667eea;font-size:14px;">
+        💡 点击歌曲后，下方会显示对应的播放页面
+    </div>
+    <!--<div th:each="item, iterStat : ${ostPage.list}" class="ost-item" th:data-index="${iterStat.index}" th:data-music="${item.musicPath}">-->
+    <!-- 歌曲列表循环 -->
+    <div th:each="item, iterStat : ${ostPage.list}" class="ost-item"
+         th:data-index="${iterStat.index}"
+         th:data-song-id="${item.musicId}"
+         th:data-song-name="${item.song}"
+         th:data-opera-name="${item.opera}"
+         th:data-source="${item.source}">
+
+        <div class="ost-number" th:text="${iterStat.count}"></div>
+        <div class="ost-play-btn">
+            <span class="play-icon">▶</span>
+        </div>
+        <div class="ost-info">
+            <div class="ost-date" th:text="${item.time}"></div>
+            <div class="ost-opera">
+                <span class="label">作品：</span>
+                <span class="value" th:text="${item.opera}"></span>
+            </div>
+            <div class="ost-song">
+                <span class="label">歌曲：</span>
+                <span class="value" th:text="${item.song}"></span>
+                <!-- 平台标签 -->
+                <span class="platform-tag"
+                      th:class="${item.source == 'netease' ? 'platform-tag netease' :
+                            item.source == 'tencent' ? 'platform-tag tencent' :
+                            'platform-tag kugou'}"
+                      th:text="${item.source == 'netease' ? '网易云' :
+                           item.source == 'tencent' ? 'QQ音乐' : '酷狗'}"></span>
+            </div>
+        </div>
+    </div>
+    <div th:with="path='/admin/music/ost?pageNum='" style="text-align: center; margin-top: 20px;">
+        <div>
+            当前是第<span th:text="${ostPage.pageNum}"></span>页
+            共<span th:text="${ostPage.pages}"></span>页
+            共<span th:text="${ostPage.total}"></span>条记录
+        </div>
+        <ul class="pagelist">
+            <li>
+                <a th:href="${path}+'1'">首页</a>
+            </li>
+            <li th:if="${ostPage.hasPreviousPage}">
+                <a th:href="${path}+${ostPage.prePage}">上一页</a>
+            </li>
+            <li th:if="${ostPage.hasNextPage}">
+                <a th:href="${path}+${ostPage.nextPage}">下一页</a>
+            </li>
+            <li>
+                <a th:href="${path}+${ostPage.pages}">尾页</a>
+            </li>
+        </ul>
+    </div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2.0.1/dist/Meting.min.js"></script>
+<script th:src="@{/local/js/ost.js}"></script>
+</body>
+</html>

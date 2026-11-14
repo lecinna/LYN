@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <style type="text/css">
+        .content-area {
+            background-color:  black;
+            position: absolute;
+            top: 150px;
+            left: 220px;
+        }
+        .toolbar {
+            margin-bottom: 20px;
+            display: flex;
+            width: 200px;
+            gap: 15px;
+            position: relative;
+            top: 0px;
+            left: 200px;
+        }
+        .pagination-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: -150px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(222, 184, 135, 0.15);
+        }
+
+        .pagination-info {
+            color: #666;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .pagination-info span {
+            color: #B8860B;
+            font-weight: 600;
+            margin: 0 3px;
+
+        }
+
+        .pagelist {
+            display: flex;
+            gap: 8px;
+            list-style: none;
+            margin: 15px 0 0 0;
+            padding: 0;
+            justify-content: center;
+        }
+
+        .pagelist li a {
+            padding: 8px 14px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            text-decoration: none;
+            color: #666;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .pagelist li a:hover {
+            color: white;
+            border-color: #667eea;
+        }
+    </style>
+    <title>演艺经历</title>
+    <link rel="stylesheet" th:href="@{/local/css/backManage.css}">
+    <link rel="stylesheet" th:href="@{/local/css/performance.css}">
+    <link rel="stylesheet" th:href="@{/local/css/page.css}">
+</head>
+<body>
+<div id="manager"><h2>LYN系统后台管理</h2></div>
+<div id="top" th:fragment="top">
+    <input id="bthFresh" type="button" value="刷新">
+    <form th:action="@{/admin/doLogin}">
+        <input id="logout" type="submit" value="退出登录">
+    </form>
+</div>
+<div id="left" th:fragment="left">
+    <div class="nav">
+        <ul class="navCon">
+            <li><a th:href="@{/loginBack/first}">首页</a></li>
+            <li>
+                <div class="dropdown">
+                    <a th:href="@{/loginBack/back/introduce}" class="dropbtn">个人介绍</a>
+                    <div class="dropdown-content">
+                        <a th:href="@{/loginBack/back/introduce}" target="_parent" title="introduce">个人介绍</a>
+                        <a th:href="@{#}" target="_parent" title="performance">演艺经历</a>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="dropdown">
+                    <a th:href="@{/login/back/musicWork}" class="dropbtn">音乐作品</a>
+                    <div class="dropdown-content">
+                        <a th:href="@{/loginBack/back/ost}" target="_parent" title="ost">OST</a>
+                        <a th:href="@{/loginBack/back/ep}" target="_parent" title="ep">专辑</a>
+                        <a th:href="@{/loginBack/back/single}" target="_parent" title="single">单曲</a>
+                    </div>
+                </div>
+            </li>
+            <li><a th:href="@{/loginBack/back/action}">影视作品</a></li>
+            <li><a th:href="@{/loginBack/back/word}">经典语录</a></li>
+            <li>
+                <div class="dropdown">
+                    <a th:href="@{/loginBack/back/prize}" class="dropbtn">代言及奖项</a>
+                    <div class="dropdown-content" >
+                        <a th:href="@{/loginBack/back/endorsement}" target="_parent" title="endorsement">代言</a>
+                        <a th:href="@{/loginBack/back/achievement}" target="_parent" title="achievement">奖项</a>
+                    </div>
+                </div>
+            </li>
+            <li><a th:href="@{/loginBack/back/message}">评价管理</a></li>
+            <li><a th:href="@{/loginBack/back/system}">系统管理</a></li>
+        </ul>
+    </div>
+</div>
+<div id="perId" th:text="${perId}"></div>
+    <div class="content-area">
+        <div class="toolbar">
+            <form th:action="@{/loginBack/back/toAddPer}" method="get">
+                <button type="submit" class="btn-add">
+                    <span>+ 添加演艺经历</span>
+                </button>
+            </form>
+        </div>
+    <table class="data-table">
+        <thead>
+        <tr>
+            <th style="width: 80px;">序号</th>
+            <th style="width: 150px;">时间</th>
+            <th>活动内容</th>
+            <th>相关作品</th>
+            <th style="width: 180px;">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${performancePage.list}">
+            <td th:text="${item.perId}"></td>
+            <td th:text="${item.date}"></td>
+            <td th:text="${item.active}"></td>
+            <td th:text="${item.work}"></td>
+            <td>
+                <a th:href="@{'/loginBack/delPer?perId='+${item.perId}}"
+                   onclick="return confirm('确定要删除该条记录吗？')">删除</a>
+                <a th:href="@{'/loginBack/back/toEditPer?perId='+${item.perId}}">修改</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="pagination-container">
+    <div class="pagination-info" style="text-align: center; margin-top: 30px;">
+        <div>
+            当前是第<span th:text="${performancePage.pageNum}"></span>页
+            共<span th:text="${performancePage.pages}"></span>页
+            共<span th:text="${performancePage.total}"></span>条记录
+        </div>
+        <ul class="pagelist" style="justify-content: center; margin-top: 15px;">
+            <li>
+                <a th:href="@{/loginBack/back/perform(pageNum=1)}">首页</a>
+            </li>
+            <li th:if="${performancePage.hasPreviousPage}">
+                <a th:href="@{/loginBack/back/perform(pageNum=${performancePage.prePage})}">上一页</a>
+            </li>
+            <li th:if="${performancePage.hasNextPage}">
+                <a th:href="@{/loginBack/back/perform(pageNum=${performancePage.nextPage})}">下一页</a>
+            </li>
+            <li th:if="${performancePage.pages > 1}">
+                <a th:href="@{/loginBack/back/perform(pageNum=${performancePage.pages})}">尾页</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div id="bottom">底部</div>
+</body>
+</html>

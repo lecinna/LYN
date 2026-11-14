@@ -1,0 +1,681 @@
+/* 星空背景 */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+        radial-gradient(2px 2px at 20px 30px, rgba(255, 215, 0, 0.8), transparent),
+        radial-gradient(2px 2px at 40px 70px, rgba(255, 215, 0, 0.6), transparent),
+        radial-gradient(1px 1px at 90px 40px, rgba(255, 255, 255, 0.8), transparent),
+        radial-gradient(1px 1px at 130px 80px, rgba(255, 255, 255, 0.6), transparent),
+        radial-gradient(2px 2px at 160px 30px, rgba(255, 215, 0, 0.7), transparent);
+    background-size: 200px 100px;
+    animation: starTwinkle 4s ease-in-out infinite alternate;
+    z-index: -2;
+}
+
+@keyframes starTwinkle {
+    0% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+/* 金色光晕背景 */
+body::after {
+    content: '';
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background:
+        radial-gradient(circle at 30% 40%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 70% 60%, rgba(218, 165, 32, 0.08) 0%, transparent 50%);
+    animation: goldenGlow 20s ease-in-out infinite;
+    z-index: -1;
+}
+
+@keyframes goldenGlow {
+    0%, 100% {
+        transform: scale(1) rotate(0deg);
+    }
+    50% {
+        transform: scale(1.1) rotate(10deg);
+    }
+}
+
+/* 页面标题 - 金色荣耀 */
+.page-title {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 40px;
+    position: relative;
+    padding: 30px 0;
+}
+
+.page-title > h1 {
+    font-size: 56px;
+    font-weight: 900;
+    background: linear-gradient(135deg, #ffd700, #ffed4e, #daa520, #ffd700);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 12px;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    position: relative;
+    display: inline-block;
+    animation: goldShimmer 3s linear infinite;
+    filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.6));
+}
+
+@keyframes goldShimmer {
+    0% {
+        background-position: 0% center;
+    }
+    100% {
+        background-position: 200% center;
+    }
+}
+
+.page-title > h1::before {
+    content: '👑';
+    position: absolute;
+    left: -80px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 50px;
+    animation: crownFloat 3s ease-in-out infinite;
+    filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.8));
+}
+
+.page-title > h1::after {
+    content: '🏅';
+    position: absolute;
+    right: -80px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 50px;
+    animation: medalBounce 2.5s ease-in-out infinite;
+    filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.8));
+}
+
+@keyframes crownFloat {
+    0%, 100% {
+        transform: translateY(-50%) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-60%) rotate(10deg);
+    }
+}
+
+@keyframes medalBounce {
+    0%, 100% {
+        transform: translateY(-50%) scale(1);
+    }
+    50% {
+        transform: translateY(-55%) scale(1.1);
+    }
+}
+
+.page-title > h3 {
+    color: rgba(255, 215, 0, 0.7);
+    font-size: 18px;
+    letter-spacing: 8px;
+    font-weight: 300;
+    text-transform: uppercase;
+    margin-top: 20px;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+/* 奖项容器 - 荣誉陈列室 */
+.achievement-container {
+    max-width: 1400px;
+    margin: 0 auto 60px;
+    padding: 0 40px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 45px;
+    perspective: 1500px;
+}
+
+/* 奖项卡片 - 金属徽章 */
+.achievement-card {
+    position: relative;
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.05) 0%, rgba(139, 69, 19, 0.05) 100%);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    overflow: hidden;
+    border: 3px solid transparent;
+    background-clip: padding-box;
+    box-shadow:
+        0 10px 40px rgba(0, 0, 0, 0.4),
+        inset 0 0 30px rgba(255, 215, 0, 0.1);
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    cursor: pointer;
+    opacity: 0;
+    animation: cardSlideIn 0.8s ease forwards;
+}
+
+.achievement-card::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    background: linear-gradient(45deg, #ffd700, #ffed4e, #daa520, #b8860b, #ffd700);
+    background-size: 400% 400%;
+    border-radius: 20px;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    animation: borderGlow 4s ease infinite;
+}
+
+.achievement-card:hover::before {
+    opacity: 1;
+}
+
+@keyframes borderGlow {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+.achievement-card:nth-child(1) { animation-delay: 0.1s; }
+.achievement-card:nth-child(2) { animation-delay: 0.2s; }
+.achievement-card:nth-child(3) { animation-delay: 0.3s; }
+.achievement-card:nth-child(4) { animation-delay: 0.4s; }
+.achievement-card:nth-child(5) { animation-delay: 0.5s; }
+.achievement-card:nth-child(6) { animation-delay: 0.6s; }
+
+@keyframes cardSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(60px) rotateX(-15deg);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) rotateX(0);
+    }
+}
+
+.achievement-card:hover {
+    transform: translateY(-15px) scale(1.03);
+    box-shadow:
+        0 20px 60px rgba(255, 215, 0, 0.3),
+        0 0 80px rgba(255, 215, 0, 0.2);
+}
+
+/* 卡片光晕 */
+.card-glow {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.2) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+}
+
+.achievement-card:hover .card-glow {
+    opacity: 1;
+    animation: glowRotate 3s linear infinite;
+}
+
+@keyframes glowRotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* 奖项徽章 */
+.achievement-badge {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #ffd700, #ffed4e);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow:
+        0 0 20px rgba(255, 215, 0, 0.6),
+        0 0 40px rgba(255, 215, 0, 0.4);
+    z-index: 5;
+    opacity: 0;
+    transform: scale(0) rotate(-180deg);
+    transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.achievement-card:hover .achievement-badge {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+}
+
+.badge-number {
+    font-size: 24px;
+    font-weight: 900;
+    color: #8b4513;
+    position: absolute;
+}
+
+.badge-icon {
+    font-size: 35px;
+    opacity: 0.3;
+}
+
+/* 图片容器 */
+.achievement-image {
+    position: relative;
+    width: 100%;
+    height: 320px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #2a1f0e 0%, #3d2b1f 100%);
+}
+
+.achievement-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+    filter: saturate(0.9) brightness(0.95);
+}
+
+.achievement-card:hover .achievement-image img {
+    transform: scale(1.15);
+    filter: saturate(1.1) brightness(1.05) contrast(1.1);
+}
+
+/* 图片遮罩 */
+.image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom,
+        transparent 0%,
+        rgba(255, 215, 0, 0.1) 50%,
+        rgba(139, 69, 19, 0.3) 100%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.achievement-card:hover .image-overlay {
+    opacity: 1;
+}
+
+/* 信息区域 */
+.achievement-info {
+    position: relative;
+    padding: 28px 32px;
+    background: rgba(255, 215, 0, 0.02);
+    z-index: 2;
+    border-top: 2px solid rgba(255, 215, 0, 0.2);
+}
+
+/* 奖项名称 - 金色文字 */
+.achievement-incident {
+    font-size: 24px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #ffd700, #ffed4e, #daa520);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 12px;
+    letter-spacing: 2px;
+    transition: all 0.4s ease;
+    line-height: 1.4;
+}
+
+.achievement-card:hover .achievement-incident {
+    transform: translateX(8px);
+    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+}
+
+/* 代言/说明 - 优雅字体 */
+.achievement-endorse {
+    color: rgba(255, 215, 0, 0.8);
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 18px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    transition: all 0.4s ease;
+}
+
+.achievement-card:hover .achievement-endorse {
+    color: rgba(255, 255, 255, 0.9);
+    transform: translateX(8px);
+}
+
+/* 分隔线 */
+.achievement-divider {
+    height: 2px;
+    background: linear-gradient(to right,
+        transparent,
+        rgba(255, 215, 0, 0.5),
+        transparent);
+    margin-bottom: 15px;
+    position: relative;
+    overflow: hidden;
+}
+
+.achievement-divider::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right,
+        transparent,
+        #ffd700,
+        transparent);
+    animation: lineSweep 3s ease-in-out infinite;
+}
+
+@keyframes lineSweep {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+/* 元数据 */
+.achievement-meta {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.meta-label {
+    color: rgba(255, 215, 0, 0.6);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+/* 统计信息 */
+.achievement-stats {
+    display: flex;
+    justify-content: center;
+    padding: 40px 0 60px;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px 30px;
+    background: rgba(255, 215, 0, 0.05);
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    border-radius: 50px;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+}
+
+.stat-icon {
+    font-size: 28px;
+    animation: starRotate 4s linear infinite;
+}
+
+@keyframes starRotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.stat-label {
+    color: rgba(255, 215, 0, 0.8);
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+}
+
+/* 响应式设计 */
+@media screen and (max-width: 1200px) {
+    .achievement-container {
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 35px;
+        padding: 0 30px;
+    }
+
+    .page-title > h1 {
+        font-size: 48px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .page-title {
+        margin-top: 60px;
+        margin-bottom: 40px;
+    }
+
+    .page-title > h1 {
+        font-size: 36px;
+        letter-spacing: 6px;
+    }
+
+    .page-title > h1::before,
+    .page-title > h1::after {
+        display: none;
+    }
+
+    .page-title > h3 {
+        font-size: 14px;
+        letter-spacing: 4px;
+    }
+
+    .achievement-container {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 25px;
+        padding: 0 20px;
+    }
+
+    .achievement-image {
+        height: 260px;
+    }
+
+    .achievement-info {
+        padding: 22px 26px;
+    }
+
+    .achievement-incident {
+        font-size: 20px;
+    }
+
+    .achievement-endorse {
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .page-title > h1 {
+        font-size: 28px;
+        letter-spacing: 4px;
+    }
+
+    .page-title > h3 {
+        font-size: 12px;
+        letter-spacing: 3px;
+    }
+
+    .achievement-container {
+        grid-template-columns: 1fr;
+        padding: 0 15px;
+    }
+
+    .achievement-image {
+        height: 280px;
+    }
+
+    .achievement-info {
+        padding: 18px 22px;
+    }
+
+    .achievement-incident {
+        font-size: 18px;
+    }
+
+    .achievement-endorse {
+        font-size: 13px;
+    }
+}
+
+.content-area {
+    margin-left: 240px;
+    padding: 40px 50px;
+    width: 700px;
+    min-height: calc(100vh - 90px);
+    position: absolute;
+    top: 160px;
+}
+
+.toolbar {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 15px;
+    position: absolute;
+    top: -40px;
+    left: 80px;
+}
+
+.btn-add {
+    background: linear-gradient(#FFD569, #B0DCE6);
+    border: none;
+    padding: 12px 28px;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-add:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(102, 126, 234, 0.4);
+}
+
+.data-table {
+    width: 1350px;
+    background: white;
+    border-collapse: collapse;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: absolute;
+    left: 70px;
+    top: 10px;
+}
+
+.data-table thead {
+    background: linear-gradient(#FFD569, #B0DCE6);
+}
+
+.data-table th {
+    background: linear-gradient(#FFD569, #B0DCE6);
+    width: auto;
+    color: black;
+    padding: 10px 15px;
+    text-align: center;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.data-table td {
+    padding: 15px 15px;
+    border-bottom: 1px solid #eee;
+    text-align: center;
+}
+
+.data-table tbody tr {
+    transition: all 0.3s ease;
+}
+
+.data-table tbody tr:hover {
+    background-color: #f8f9ff;
+    transform: scale(1.005);
+}
+
+.data-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.btn-edit, .btn-delete {
+    padding: 6px 14px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 13px;
+    transition: all 0.3s ease;
+    border: 1px solid;
+    display: inline-block;
+}
+
+.btn-edit {
+    background: linear-gradient(#FFD569, #B0DCE6);
+    color: white;
+    border-color: #667eea;
+}
+
+.btn-edit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(102, 126, 234, 0.4);
+}
+
+.btn-delete {
+    color: #f5576c;
+    border-color: #f5576c;
+    background: white;
+}
+
+.btn-delete:hover {
+    background: #f5576c;
+    color: white;
+    box-shadow: 0 4px 8px rgba(245, 87, 108, 0.3);
+}
+
+
+box {
+    background: linear-gradient(#FFD569, #B0DCE6);
+    padding: 10px 50px;
+    border-radius: 8px;
+    font-size: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(102, 126, 234, 0.3);
+    display: flow;
+    align-items: center;
+    gap: 8px;
+    position: absolute;
+    top: 50px;
+    left: 500px;
+}

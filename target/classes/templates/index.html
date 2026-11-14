@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <style>
+        a:active {
+            color: lightgoldenrodyellow;
+        }
+        a:visited {
+            color: lightyellow;
+        }
+
+        #msg{
+            color: red;
+            height: 6vh;
+            vertical-align: bottom;
+        }
+
+        .nav{
+            width: 1620px;
+            height:50px;
+            font: bold 22px "宋体" ;
+            color: lightgoldenrodyellow;
+            padding-top: 60px;
+            position:relative;
+            top: 0px;
+            left: 15px;
+        }
+        .nav > li {
+            position: relative;
+            margin-right: 30px;
+        }
+        .navCon{
+            width: 1600px;
+            height: 50px;
+            position: absolute;
+            top:-50px;
+            left: 0px;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+        }
+        .navCon li{
+            list-style: none;
+            width: 180px;
+            height: 50px;
+            padding: 0px 23px;
+            line-height: 50px;
+            float: left;
+            color:lavender;
+            text-align: left;
+            position:relative;
+            top: -30px;
+            left: 0px;
+        }
+        /* 下拉 */
+        .dropdown {
+            display: inline-block;
+            position: relative;
+        }
+
+        .dropdown .dropbtn {
+            color: lavender;
+            text-decoration: none;
+            display: block;
+            padding: 0;
+            cursor: pointer;
+            z-index: 200;
+            width: 100%;
+            height: 100%;
+            line-height: 50px;
+        }
+
+        /* 下拉内容默认隐藏 */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top:50px;
+            left: 0;
+            min-width: 180px;
+            background:linear-gradient(135deg, #FFD569 0%, #B0DCE6 100%);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            z-index: 1000;
+            border-radius: 0 0 4px 4px;
+            overflow: hidden;
+        }
+
+        .dropdown-content a {
+            color: #333;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+            transition: background-color 0.3s;
+            border: none;
+            line-height: normal;
+            height: auto;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #FFA500;
+        }
+
+        /* 悬停时显示下拉菜单 */
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        table{
+            border:#150909 1px solid;
+            height: 450px;
+        }
+        table tr{
+            height: 45px;
+        }
+        .bg2{
+            background-color:#150909;
+        }
+        #logout,#uName,#bthFresh{
+            float: right;
+            text-align: center;
+        }
+        input[type="submit"]{
+            cursor:pointer;
+        }
+        input,select,textarea{
+            border:#150909 1px solid;
+        }
+        #top{
+            text-align: right;
+            height: 60px;
+            background-color:#150909;
+        }
+        #bottom{
+            background-color:#150909;
+            text-align: center;
+            height: 30px;
+            width: 1400px;
+            position: absolute;
+            margin-left: -80px;
+            top: 803px;
+        }
+
+        #middle{
+            height: 3000px;
+            clear: both;
+        }
+        #left{
+            width: 15vw;
+            font: bold 22px "宋体";
+            background-color:#150909;
+            height:705px;
+            padding-top: 60px;
+        }
+        #left>ul>li{
+            list-style: none;
+            line-height: 60px;
+            padding-left: 10px;
+        }
+        #left a{
+            text-decoration: none;
+            color:aliceblue;
+        }
+        #left>ul>li>a{
+            text-decoration: none;
+            color:honeydew;
+        }
+        #left>ul>li>a:hover{
+            font: bold 25px "宋体";
+            color: honeydew;
+        }
+        #left,#right{
+            float:left;
+        }
+        #right{
+            padding:10px 40px;
+            margin:0 auto;
+        }
+        .display_none{
+            display: none;
+        }
+        .wrap li{
+            list-style: square;
+            font: bold 16px "宋体";
+            line-height:25px;
+        }
+        .wrap{
+            display: none;
+        }
+        .trbg{
+            background-color: #eeeeee;
+        }
+        span{
+            padding-left: 5px;
+        }
+
+
+
+        /* ===== 轮播图容器（相对定位） ===== */
+        .carousel {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        /* ===== 右上角用户操作区（浮动在轮播图右上角） ===== */
+        .carousel-user-area {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            z-index: 50;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .carousel-user-area a {
+            text-decoration: none;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.4);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* 登录按钮 */
+        .carousel-user-area .login-btn {
+            color: #fff;
+            border: 1px solid rgba(102, 126, 234, 0.6);
+        }
+        .carousel-user-area .login-btn:hover {
+            background: #667eea;
+            border-color: #667eea;
+            color: #fff;
+        }
+
+        /* 退出按钮 */
+        .carousel-user-area .logout-btn {
+            color: #fff;
+            border: 1px solid rgba(231, 76, 60, 0.6);
+        }
+        .carousel-user-area .logout-btn:hover {
+            background: #e74c3c;
+            border-color: #e74c3c;
+            color: #fff;
+        }
+
+        /* 后台管理按钮 */
+        .carousel-user-area .admin-btn {
+            color: #FFD700;
+            border: 1px solid rgba(255, 215, 0, 0.6);
+        }
+        .carousel-user-area .admin-btn:hover {
+            background: #FFD700;
+            border-color: #FFD700;
+            color: #0a0a0a;
+        }
+
+        /* ===== 响应式 ===== */
+        @media (max-width: 768px) {
+            .carousel-user-area {
+                top: 10px;
+                right: 15px;
+                gap: 6px;
+                flex-wrap: wrap;
+                justify-content: flex-end;
+            }
+            .carousel-user-area a {
+                font-size: 11px;
+                padding: 4px 12px;
+            }
+        }
+    </style>
+
+
+    <meta charset="UTF-8">
+    <title>个人介绍</title>
+    <link rel="stylesheet" href="/local/css/introduce.css">
+    <link rel="stylesheet" href="/local/css/page.css">
+    <link rel="stylesheet" href="/local/css/carousel.css">
+   <!--
+</head>
+<body>
+&lt;!&ndash;  背景图像&ndash;&gt;
+<div class="background-image">
+    <img th:src="@{/local/image/photos/top.jpg}" alt="首页主图" width="1635px" height="800px">
+</div>-->
+</head>
+<body>
+<!--  图片轮播 -->
+<div class="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img th:src="@{/local/image/photos/top.jpg}" alt="轮播图1">
+        </div>
+        <div class="carousel-item">
+            <img th:src="@{/local/image/photos/top1.jpg}" alt="轮播图2">
+        </div>
+        <div class="carousel-item">
+            <img th:src="@{/local/image/photos/23.jpg}" alt="轮播图3">
+        </div>
+        <div class="carousel-item">
+            <img th:src="@{/local/image/photos/06.jpg}" alt="轮播图4">
+        </div>
+    </div>
+    <button class="carousel-btn carousel-btn-prev" onclick="changeSlide(-1)">&#10094;</button>
+    <button class="carousel-btn carousel-btn-next" onclick="changeSlide(1)">&#10095;</button>
+    <div class="carousel-dots">
+        <span class="dot active" onclick="goToSlide(0)"></span>
+        <span class="dot" onclick="goToSlide(1)"></span>
+        <span class="dot" onclick="goToSlide(2)"></span>
+        <span class="dot" onclick="goToSlide(3)"></span>
+    </div>
+    <div class="carousel-user-area">
+        <li th:if="${session.userRole != null and session.userRole == 'admin'}" style="list-style:none;">
+            <a th:href="@{/backFirst/first}" class="admin-btn">⚙️ 后台管理</a>
+        </li>
+        <li th:if="${session.userRole == null}" style="list-style:none;">
+            <a th:href="@{/admin/login}" class="login-btn">🔑 登录</a>
+        </li>
+        <li th:if="${session.userRole != null}" style="list-style:none;">
+            <a th:href="@{/admin/logout}" class="logout-btn">🚪 退出</a>
+        </li>
+    </div>
+</div>
+<div class="nav">
+    <ul class="navCon">
+        <h2>
+            <li class="dropdown">
+                <a th:href="@{#}" class="dropbtn">个人介绍</a>
+                <div class="dropdown-content">
+                    <a href="#">个人介绍</a>
+                    <a th:href="@{/admin/performance}">演艺经历</a>
+                </div>
+            </li>
+            <li class="dropdown">
+                <!--<a th:href="@{/admin/music}" class="dropbtn"></a>-->
+                音乐作品
+                <div class="dropdown-content">
+                    <a th:href="@{/admin/music/ost}">OST</a>
+                    <a th:href="@{/admin/music/ep}">专辑</a>
+                    <a th:href="@{/admin/music/single}">单曲</a>
+                </div>
+            </li>
+            <li><a th:href="@{/admin/action}">影视作品</a></li>
+            <li><a th:href="@{/admin/word}">经典语录</a></li>
+            <li class="dropdown">
+                <!-- <a th:href="@{/admin/prize}" class="dropbtn"></a>-->
+                代言及奖项
+                <div class="dropdown-content">
+                    <a th:href="@{/admin/prize/endorsement}">代言</a>
+                    <a th:href="@{/admin/prize/achievement}">奖项</a>
+                </div>
+            </li>
+            <li><a th:href="@{/admin/concert}">演唱会</a></li>
+            <li><a th:href="@{/admin/message}">留言</a></li>
+        </h2>
+    </ul>
+</div>
+<div class="container">
+    <h2>个人介绍</h2>
+    <p>&nbsp;&nbsp;刘宇宁，1990年1月8日出生于辽宁省丹东市，毕业于丹东烹饪二技校，<b>中国内地流行乐男歌手、影视演员，摩登兄弟乐队主唱</b>。<br />
+        &nbsp;&nbsp;虽然小时候就有歌手梦，但他却没有受过专业的音乐培训。在做歌手之前，他做过厨师，当过服务员，还发过传单。<br />
+        &nbsp;&nbsp;此外，他不仅在酒吧、火锅店驻唱过，还在寒冬的街头直播到深夜，并开通网络短视频平台进行自荐。<br>
+        &nbsp;&nbsp;2014年，刘宇宁与<b>吉他手阿卓、键盘手大飞</b>组建了摩登兄弟乐队，并担任主唱；之后，他们开始在网络平台直播唱歌。<br>
+        &nbsp;&nbsp;刘宇宁拥有俊朗的外表和富有感染力的歌声 ，在为网游《新天龙八部》演唱主题曲<b>《我行即我道》</b>时，其呼吸吞吐间颇有大侠风范；
+        即便歌词充满了狂傲之气，但刘宇宁收放自如，以一颗自信、不攀不比的内心为基底，唱出来没有半点轻狂，只让人感到大气磅礴，心生敬意.
+        &nbsp;&nbsp;刘宇宁的清秀颜值和烟酒嗓形成强烈反差萌，而在《蒙面唱将猜猜猜》的舞台上，“高海拔”的他则显得十分魁梧 。<br>
+        &nbsp;&nbsp;刘宇宁略带沙哑的独特嗓音，为歌曲<b>《让酒》</b>增添了几许沧桑和悲凉，更将吴邪骨子里透出的冷静、沉着和城府刻画得淋漓尽致；
+        而他豪放的唱法又与歌曲中的傲气和坚定不谋而合，唱出了吴邪内心深处依然蠢蠢欲动的少年血性和昂扬斗志<br>
+        &nbsp;&nbsp;在演唱歌曲<b>《想象》</b>时，无论是细腻的浅吟低诉，还是粗颗粒的拉扯撕裂，刘宇宁都用不同的音色和细节处理，营造了不一样的画面和意境。</p>
+</div>
+<div class="active">
+    <h3>社会活动</h3>
+   <table style="width: 1350px;  border-collapse: collapse; margin-top: 20px;">
+       <tr style="background-color: #f5f5f5; font-weight: bold;">
+           <th>活动时间</th>
+           <th>活动内容</th>
+           <th>活动图片</th>
+       </tr>
+       <tr th:if="${introducePage != null and introducePage.list != null}" th:each="item:${introducePage.list}" style="border-bottom: 1px solid #eee;">
+           <td th:text="${item.time}"></td>
+           <td th:text="${item.incident}"></td>
+           <td><img class="listimg"  style="width:120px;height:100px" th:src="@{${item.image}}"  alt="捐款图片"></td>
+       </tr>
+       <tr th:if="${introducePage == null or introducePage.list == null}">
+           <td colspan="3" style="text-align: center; padding: 20px;">暂无社会活动记录</td>
+       </tr>
+   </table>
+    <div th:if="${introducePage != null}" th:with="path='/admin/index?pageNum='" style="text-align: center; margin-top: 20px;">
+        <div>
+            当前是第<span th:text="${introducePage.pageNum}"></span>页
+            共<span th:text="${introducePage.pages}"></span>页
+            共<span th:text="${introducePage.total}"></span>条记录
+        </div>
+        <ul class="pagelist">
+            <li>
+                <a th:href="${path}+'1'">首页</a>
+            </li>
+            <li th:if="${introducePage.hasPreviousPage}">
+                <a th:href="${path}+${introducePage.prePage}">上一页</a>
+            </li>
+            <li th:if="${introducePage.hasNextPage}">
+                <a th:href="${path}+${introducePage.nextPage}">下一页</a>
+            </li>
+            <li>
+                <a th:href="${path}+${introducePage.pages}">尾页</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<footer >
+    <div class="littlefooter">摩登兄弟刘宇宁微博&nbsp;&nbsp;&nbsp;&nbsp;摩登兄弟刘宇宁QQ音乐，酷狗音乐&nbsp;&nbsp;&nbsp;&nbsp;摩登兄弟刘宇宁哔哩哔哩&nbsp;&nbsp;&nbsp;&nbsp;摩登兄弟刘宇宁抖音
+        <a th:href="@{https://weibo.com/u/5456865382}" title="老大" target="_parent"><img th:src="@{/local/image/photos/09.jpg}" width="100px" height="100px"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a th:href="@{https://y.qq.com/n/ryqq/singer/001Iu4Dv1NzRCD}"  title="老大" target="_parent"><img th:src="@{/local/image/photos/qqmusic.png}" width="100px" height="100px"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a th:href="@{https://space.bilibili.com/1043793436?spm_id_from=333.337.0.0}" title="老大" target="_parent"><img th:src="@{/local/image/photos/bili.png}" width="100px" height="100px"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="https://www.douyin.com/user/MS4wLjABAAAAlsSt6GDLVMUG-JnioR6n5lZSuP6bUoVKXMc_52AlG8A?enter_from=general_search&amp;enter_method=general_search&amp;extra_params=%7B%22search_params%22%3A%7B%22search_result_id%22%3A%2256630472225%22%2C%22relation_tag%22%3A0%2C%22log_pb%22%3A%7B%22impr_id%22%3A%22202407272304407A6851320E1A84DEA3A4%22%7D%2C%22search_type%22%3A%22general%22%2C%22impr_id%22%3A%22202407272304407A6851320E1A84DEA3A4%22%2C%22search_id%22%3A%22202407272304407A6851320E1A84DEA3A4%22%2C%22search_keyword%22%3A%22%E6%91%A9%E7%99%BB%E5%85%84%E5%BC%9F%E5%88%98%E5%AE%87%E5%AE%81%22%2C%22token_type%22%3A%22discover_list%22%7D%7D"><img th:src="@{/local/image/photos/tiktok.png}" width="100px" height="100px"></a>
+    </div>
+    <div id="littlebox">制作人：<a th:href="@{https://weibo.com/u/7741881030}">MD_lecinna</a>(来自摩饭的一位正朝老大努力的cool girl!)</div>
+
+</footer>
+<script>
+    //进入后台管理界面
+    document.addEventListener('keydown', function(e) {
+        // Ctrl + Shift + A
+        if (e.ctrlKey && e.shiftKey && e.key === 'A') {
+            e.preventDefault();
+            if (confirm('🔐 是否跳转到后台管理？')) {
+                window.location.href = '/admin/login';
+            }
+        }
+    });
+    //验证密码
+    document.addEventListener('keydown', function(e) {
+        // Ctrl + Shift + A
+        if (e.ctrlKey && e.shiftKey && e.key === 'A') {
+            e.preventDefault();
+            const password = prompt('🔐 请输入管理员密码：');
+            if (password === '123456') {  // 改成你的密码
+                window.location.href = '/admin/login';
+            } else if (password !== null) {
+                alert('密码错误！');
+            }
+        }
+    });
+
+    let currentSlide = 0;
+    const items = document.querySelectorAll('.carousel-item');
+    const dots = document.querySelectorAll('.dot');
+    const inner = document.querySelector('.carousel-inner');
+    const totalSlides = items.length;
+    let autoPlayTimer;
+
+    function updateCarousel() {
+        inner.style.transform = 'translateX(-' + (currentSlide * 100) + '%)';
+        dots.forEach(function(dot, index) {
+            dot.classList.toggle('active', index === currentSlide);
+        });
+    }
+
+    function changeSlide(direction) {
+        currentSlide = (currentSlide + direction + totalSlides) % totalSlides;
+        updateCarousel();
+        resetAutoPlay();
+    }
+
+    function goToSlide(index) {
+        currentSlide = index;
+        updateCarousel();
+        resetAutoPlay();
+    }
+
+    function autoPlay() {
+        autoPlayTimer = setInterval(function() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateCarousel();
+        }, 4000);
+    }
+
+    function resetAutoPlay() {
+        clearInterval(autoPlayTimer);
+        autoPlay();
+    }
+
+autoPlay();
+</script>
+</body>
+</html>

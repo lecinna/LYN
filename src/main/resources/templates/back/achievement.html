@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <style type="text/css">
+        .pagination-info {
+            color: #666;
+            font-size: 14px;
+            position: absolute;
+            bottom: 35px;
+            left: 800px;
+        }
+
+        .pagination-info span {
+            color: #667eea;
+            font-weight: 600;
+            margin: 0 3px;
+        }
+
+        .pagelist {
+            display: flex;
+            gap: 8px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .pagelist li a {
+            padding: 8px 14px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            text-decoration: none;
+            color: #666;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .pagelist li a:hover {
+            background: linear-gradient(#FFD569, #B0DCE6);
+            color: white;
+            border-color: #667eea;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <title>演艺经历</title>
+    <link rel="stylesheet" th:href="@{/local/css/backManage.css}">
+    <link rel="stylesheet" th:href="@{/local/css/achievement.css}">
+    <link rel="stylesheet" th:href="@{/local/css/page.css}">
+</head>
+<body>
+<div id="manager"><h2>LYN系统后台管理</h2></div>
+<div id="top" th:fragment="top">
+    <input id="bthFresh" type="button" value="刷新">
+    <form th:action="@{/admin/doLogin}">
+        <input id="logout" type="submit" value="退出登录">
+    </form>
+</div>
+<div id="left" th:fragment="left">
+    <div class="nav">
+        <ul class="navCon">
+            <li><a th:href="@{/loginBack/first}">首页</a></li>
+            <li>
+                <div class="dropdown">
+                    <a th:href="@{/loginBack/back/introduce}" class="dropbtn">个人介绍</a>
+                    <div class="dropdown-content">
+                        <a th:href="@{/loginBack/back/introduce}" target="_parent" title="introduce">个人介绍</a>
+                        <a th:href="@{/loginBack/back/perform}" target="_parent" title="performance">演艺经历</a>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="dropdown">
+                    <a th:href="@{/login/back/musicWork}" class="dropbtn">音乐作品</a>
+                    <div class="dropdown-content">
+                        <a th:href="@{/loginBack/back/ost}" target="_parent" title="ost">OST</a>
+                        <a th:href="@{/loginBack/back/ep}" target="_parent" title="ep">专辑</a>
+                        <a th:href="@{/loginBack/back/single}" target="_parent" title="single">单曲</a>
+                    </div>
+                </div>
+            </li>
+            <li><a th:href="@{/loginBack/back/action}">影视作品</a></li>
+            <li><a th:href="@{/loginBack/back/word}">经典语录</a></li>
+            <li>
+                <div class="dropdown">
+                    <a th:href="@{/loginBack/back/prize}" class="dropbtn">代言及奖项</a>
+                    <div class="dropdown-content" >
+                        <a th:href="@{/loginBack/back/endorsement}" target="_parent" title="endorsement">代言</a>
+                        <a th:href="@{#}" target="_parent" title="achievement">奖项</a>
+                    </div>
+                </div>
+            </li>
+            <li><a th:href="@{/loginBack/back/message}">评价管理</a></li>
+            <li><a th:href="@{/loginBack/back/system}">系统管理</a></li>
+        </ul>
+    </div>
+</div>
+<div id="achieveId" th:text="${achieveId}"></div>
+<div class="content-area">
+    <div class="toolbar">
+        <form th:action="@{/loginBack/back/toAddAchievement}" method="get">
+            <button type="submit" class="btn-add">
+                <span>+ 添加成就</span>
+            </button>
+        </form>
+    </div>
+    <table class="data-table">
+        <thead>
+        <tr>
+            <th style="width: 80px;">序号</th>
+            <th style="width: 150px;">事件</th>
+            <th>成就</th>
+            <th>图片</th>
+            <th style="width: 180px;">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${achievementPage.list}">
+            <td th:text="${item.achieveId}"></td>
+            <td th:text="${item.incident}"></td>
+            <td th:text="${item.endorse}"></td>
+            <td th:text="${item.image}"></td>
+            <td>
+                <a th:href="@{'/loginBack/delAchievement?achieveId='+${item.achieveId}}"
+                   onclick="return confirm('确定要删除该条记录吗？')">删除</a>
+                <a th:href="@{'/loginBack/back/toEditAchievement?achieveId='+${item.achieveId}}">修改</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+    <div class="pagination-info">
+        <div th:with="path='/loginBack/back/achievement?pageNum='" style="margin-top: 40px;">
+            <div>
+                当前是第<span th:text="${achievementPage.pageNum}"></span>页
+                共<span th:text="${achievementPage.pages}"></span>页
+                共<span th:text="${achievementPage.total}"></span>条记录
+            </div>
+            <ul class="pagelist">
+                <li>
+                    <a th:href="${path}+'1'">首页</a>
+                </li>
+                <li th:if="${achievementPage.hasPreviousPage}">
+                    <a th:href="${path}+${achievementPage.prePage}">上一页</a>
+                </li>
+                <li th:if="${achievementPage.hasNextPage}">
+                    <a th:href="${path}+${achievementPage.nextPage}">下一页</a>
+                </li>
+                <li th:if="${achievementPage.pages > 1}">
+                    <a th:href="${path}+${achievementPage.pages}">尾页</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div id="bottom">底部</div>
+</body>
+</html>

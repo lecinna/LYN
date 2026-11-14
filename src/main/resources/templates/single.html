@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <style type="text/css">
+        .fixed-user-area {
+            position: fixed;
+            top: 15px;
+            right: 25px;
+            z-index: 9999;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .fixed-user-area a {
+            text-decoration: none;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            backdrop-filter: blur(12px);
+            background: rgba(0, 0, 0, 0.55);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .fixed-user-area a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .fixed-user-area .login-btn {
+            color: #fff;
+            border: 1px solid rgba(102, 126, 234, 0.5);
+        }
+        .fixed-user-area .login-btn:hover {
+            background: #667eea;
+            border-color: #667eea;
+            color: #fff;
+        }
+
+        .fixed-user-area .logout-btn {
+            color: #fff;
+            border: 1px solid rgba(231, 76, 60, 0.5);
+        }
+        .fixed-user-area .logout-btn:hover {
+            background: #e74c3c;
+            border-color: #e74c3c;
+            color: #fff;
+        }
+
+        .fixed-user-area .admin-btn {
+            color: #FFD700;
+            border: 1px solid rgba(255, 215, 0, 0.5);
+        }
+        .fixed-user-area .admin-btn:hover {
+            background: #FFD700;
+            border-color: #FFD700;
+            color: #0a0a0a;
+        }
+
+        @media (max-width: 768px) {
+            .fixed-user-area {
+                top: 10px;
+                right: 10px;
+                gap: 6px;
+            }
+            .fixed-user-area a {
+                font-size: 11px;
+                padding: 4px 12px;
+            }
+        }
+        .platform-tag {
+            display: inline-block;
+            font-size: 10px;
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-left: 8px;
+            color: white;
+            font-weight: 600;
+        }
+        .platform-tag.netease {
+            background: #c20c0c;
+        }
+        .platform-tag.tencent {
+            background: #00dc64;
+            color: #333;
+        }
+        .platform-tag.kugou {
+            background: #ff6f00;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <title>单曲</title>
+    <link rel="stylesheet" th:href="@{/local/css/main.css}">
+    <link rel="stylesheet" th:href="@{/local/css/single.css}">
+    <link rel="stylesheet" href="/local/css/page.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
+</head>
+<body>
+<div class="background-image">
+    <img th:src="@{/local/image/photos/top1.jpg}" alt="首页主图" width="1635px" height="800px">
+    <div class="fixed-user-area">
+        <li th:if="${session.userRole != null and session.userRole == 'admin'}" style="list-style:none;">
+            <a th:href="@{/backFirst/first}" class="admin-btn">⚙️ 后台管理</a>
+        </li>
+        <li th:if="${session.userRole == null}" style="list-style:none;">
+            <a th:href="@{/admin/login}" class="login-btn">🔑 登录</a>
+        </li>
+        <li th:if="${session.userRole != null}" style="list-style:none;">
+            <a th:href="@{/admin/logout}" class="logout-btn">🚪 退出</a>
+        </li>
+    </div>
+</div>
+<div class="nav">
+    <ul class="navCon">
+        <h2>
+            <li class="dropdown">
+                <a th:href="@{/admin/index}" class="dropbtn">个人介绍</a>
+                <div class="dropdown-content">
+                    <a th:href="@{/admin/index}">个人介绍</a>
+                    <a th:href="@{/admin/performance}">演艺经历</a>
+                </div>
+            </li>
+            <li class="dropdown">
+                音乐作品
+                <div class="dropdown-content">
+                    <a th:href="@{/admin/music/ost}">OST</a>
+                    <a th:href="@{/admin/music/ep}">专辑</a>
+                    <a th:href="@{#}">单曲</a>
+                </div>
+            </li>
+            <li><a th:href="@{/admin/action}">影视作品</a></li>
+            <li><a th:href="@{/admin/word}">经典语录</a></li>
+            <li class="dropdown">
+                代言及奖项
+                <div class="dropdown-content">
+                    <a th:href="@{/admin/prize/endorsement}">代言</a>
+                    <a th:href="@{/admin/prize/achievement}">奖项</a>
+                </div>
+            </li>
+            <li><a th:href="@{/admin/concert}">演唱会</a></li>
+            <li><a th:href="@{/admin/message}">留言</a></li>
+        </h2>
+    </ul>
+    <div class="single-main">
+        <div class="single-sidebar">
+            <div class="sidebar-header">
+                <div class="disc-icon">
+                    <span class="disc-inner">♪</span>
+                </div>
+                <h1 class="sidebar-title">单曲</h1>
+                <h3 class="sidebar-subtitle">SINGLE COLLECTION</h3>
+                <div class="song-count">
+                    <span th:text="${singlePage.total} + ' 首歌曲'"></span>
+                </div>
+            </div>
+            <div class="sidebar-stats">
+                <div class="stat-item">
+                    <span class="stat-label">最新单曲</span>
+                    <span class="stat-value" th:if="${singlePage.list.size() > 0}" ></span>
+                </div>
+            </div>
+        </div>
+        <div class="single-content">
+            <div class="song-list">
+                <div th:each="item, iterStat : ${singlePage.list}" class="song-row"
+                     th:data-index="${iterStat.index}"
+                     th:data-song-id="${item.musicId}"
+                     th:data-song-name="${item.name}"
+                     th:data-source="${item.source}">
+                    <!-- 改这里：<a> 改回 <span> -->
+                    <span class="play-icon" style="cursor:pointer; color:#667eea;">▶</span>
+                    <div class="song-details">
+                        <li class="song-name"><span th:text="${item.name}"></span><span class="platform-tag"
+                                                                                        th:class="${item.source == 'netease' ? 'platform-tag netease' : item.source == 'tencent' ? 'platform-tag tencent' : item.source == 'kugou' ? 'platform-tag kugou' : 'platform-tag'}"
+                                                                                        th:text="${item.source == 'netease' ? '网易云' : item.source == 'tencent' ? 'QQ音乐' : item.source == 'kugou' ? '酷狗' : ''}"></span></li>
+                    </div>
+                </div>
+            </div>
+            <div th:with="path='/admin/music/single?pageNum='" style="text-align: center; margin-top: 50px;">
+                <div>
+                    当前是第<span th:text="${singlePage.pageNum}"></span>页
+                    共<span th:text="${singlePage.pages}"></span>页
+                    共<span th:text="${singlePage.total}"></span>条记录
+                </div>
+                <ul class="pagelist">
+                    <li>
+                        <a th:href="${path}+'1'">首页</a>
+                    </li>
+                    <li th:if="${singlePage.hasPreviousPage}">
+                        <a th:href="${path}+${singlePage.prePage}">上一页</a>
+                    </li>
+                    <li th:if="${singlePage.hasNextPage}">
+                        <a th:href="${path}+${singlePage.nextPage}">下一页</a>
+                    </li>
+                    <li>
+                        <a th:href="${path}+${singlePage.pages}">尾页</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var playBtns = document.querySelectorAll('.play-icon');
+        playBtns.forEach(function(btn) {
+            var row = btn.closest('.song-row');
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                var songName = row ? row.getAttribute('data-song-name') : null;
+                if (songName) {
+                    window.open('https://music.163.com/#/search/m/?s=' + encodeURIComponent(songName) + '&type=1', '_blank');
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

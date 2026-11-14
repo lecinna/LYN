@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>演唱会编辑</title>
+    <link rel="stylesheet" th:href="@{/local/css/backManage.css}">
+    <link rel="stylesheet" th:href="@{/local/css/introduce.css}">
+</head>
+<body>
+<div id="manager"><h2>LYN系统后台管理</h2></div>
+<div id="top" th:fragment="top">
+    <input id="bthFresh" type="button" value="刷新">
+    <br>
+    <form th:action="@{/admin/doLogin}">
+        <input id="logout" type="submit" value="退出登录">
+    </form>
+</div>
+<div id="left" th:fragment="left">
+    <div class="nav">
+        <ul class="navCon">
+            <li><a th:href="@{/loginBack/first}">首页</a></li>
+            <li>
+                <div class="dropdown">
+                    <a th:href="@{/loginBack/back/introduce}" class="dropbtn">个人介绍</a>
+                    <div class="dropdown-content">
+                        <a th:href="@{/loginBack/back/introduce}" target="_parent">个人介绍</a>
+                        <a th:href="@{/loginBack/back/performance}" target="_parent">演艺经历</a>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="dropdown">
+                    <a th:href="@{/loginBack/back/music}" class="dropbtn">音乐作品</a>
+                    <div class="dropdown-content">
+                        <a th:href="@{/loginBack/back/ost}" target="_parent">OST</a>
+                        <a th:href="@{/loginBack/back/ep}" target="_parent">专辑</a>
+                        <a th:href="@{/loginBack/back/single}" target="_parent">单曲</a>
+                    </div>
+                </div>
+            </li>
+            <li><a th:href="@{/loginBack/back/action}">影视作品</a></li>
+            <li><a th:href="@{/loginBack/back/word}">经典语录</a></li>
+            <li>
+                <div class="dropdown">
+                    <a th:href="@{/loginBack/back/prize}" class="dropbtn">代言及奖项</a>
+                    <div class="dropdown-content">
+                        <a th:href="@{/loginBack/back/endorsement}" target="_parent">代言</a>
+                        <a th:href="@{/loginBack/back/achievement}" target="_parent">奖项</a>
+                    </div>
+                </div>
+            </li>
+            <li><a th:href="@{/loginBack/back/concert}">演唱会</a></li>
+            <li><a th:href="@{/loginBack/back/message}">评价管理</a></li>
+            <li><a th:href="@{/loginBack/back/system}">系统管理</a></li>
+        </ul>
+    </div>
+</div>
+<div class="content-area">
+    <div id="msg" th:text="${msg}"></div>
+    <form th:action="@{/loginBack/back/editConcert}" method="post">
+        <box type="text">
+            <span>修改记录</span>
+        </box>
+        <input type="hidden" name="id" th:value="${concert.id}">
+        <table id="addTable" class="data-table">
+            <tr>
+                <th>主题</th>
+                <td><input type="text" name="title" th:value="${concert.title}"></td>
+            </tr>
+            <tr>
+                <th>城市</th>
+                <td><input type="text" name="city" th:value="${concert.city}"></td>
+            </tr>
+            <tr>
+                <th>地点</th>
+                <td><input type="text" name="venue" th:value="${concert.venue}"></td>
+            </tr>
+            <tr>
+                <th>日期</th>
+                <td><input type="date" name="date" th:value="${#dates.format(concert.date, 'yyyy-MM-dd')}"></td>
+            </tr>
+            <tr>
+                <th>描述</th>
+                <td><input type="text" name="description" th:value="${concert.description}"></td>
+            </tr>
+            <tr>
+                <th>图片</th>
+                <td><input type="text" name="image" th:value="${concert.image}" style="width:400px;"></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input id="btngoBack" type="button" value="返回" th:onclick="'window.location.href=\'' + @{/loginBack/back/concert} + '\''">
+                    <input type="reset" value="重置">
+                    <input type="submit" value="提交">
+                </td>
+            </tr>
+        </table>
+    </form>
+    <div id="bottom">底部</div>
+</div>
+</body>
+</html>

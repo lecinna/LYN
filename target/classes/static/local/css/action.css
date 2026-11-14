@@ -1,0 +1,453 @@
+body {
+    background:
+            radial-gradient(2px 2px at 20px 30px, rgba(255, 215, 0, 0.8), transparent),
+            radial-gradient(2px 2px at 40px 70px, rgba(255, 215, 0, 0.6), transparent),
+            radial-gradient(1px 1px at 90px 40px, rgba(255, 255, 255, 0.8), transparent),
+            radial-gradient(1px 1px at 130px 80px, rgba(255, 255, 255, 0.6), transparent),
+            radial-gradient(2px 2px at 160px 30px, rgba(255, 215, 0, 0.7), transparent);
+}
+/* 页面标题 - 影院风格 */
+.page-title {
+    text-align: center;
+    margin-top: 60px;
+    margin-bottom: 50px;
+    position: absolute;
+    top: 750px;
+    left: 700px;
+}
+
+.page-title h1 {
+    font-size: 48px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #FFD569 0%, #B0DCE6 50%, #4facfe 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    position: relative;
+    top: 30px;
+    display: inline-block;
+}
+
+.page-title h1::after {
+    content: '🎬';
+    position: absolute;
+    right: -60px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 40px;
+    -webkit-text-fill-color: initial;
+}
+
+.page-title h1::before {
+    content: '🎥';
+    position: absolute;
+    left: -60px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 40px;
+    -webkit-text-fill-color: initial;
+}
+
+.page-title h3 {
+    color: #888;
+    font-size: 16px;
+    letter-spacing: 6px;
+    font-weight: 300;
+    text-transform: uppercase;
+}
+
+/* 影视作品容器 - 电影院排片风格 */
+.action-container {
+    max-width: 1600px;
+    margin: 0 auto 150px;
+    padding: 0 40px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 50px;
+    perspective: 1000px;
+    position: relative;
+    top: 48px;
+}
+
+/* 影视作品卡片 - 3D翻转效果 */
+.action-item {
+    position: relative;
+    height: 520px;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
+}
+
+.action-item:hover {
+    transform: translateY(-15px) ;
+}
+
+/* 海报主体 */
+.action-poster {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    backface-visibility: hidden;
+}
+
+/* 图片容器 */
+.action-image {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.action-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.5s ease;
+}
+
+.action-item:hover .action-image img {
+    transform: scale(1.1);
+    filter: brightness(1.1) contrast(1.05);
+}
+
+/* 渐变遮罩层 */
+.action-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.6) 50%, transparent 100%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    display: flex;
+    align-items: flex-end;
+    padding: 25px;
+}
+
+.action-item:hover .action-overlay {
+    opacity: 1;
+}
+
+/* 作品名称 - 悬浮显示 */
+.action-name {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 25px 20px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.95), transparent);
+    transform: translateY(0);
+    transition: all 0.4s ease;
+}
+
+.action-name h4 {
+    margin: 0;
+    color: #fff;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+    line-height: 1.4;
+}
+
+.action-item:hover .action-name {
+    transform: translateY(-10px);
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.98) 0%, rgba(0, 0, 0, 0.7) 100%);
+}
+
+/* 电影胶片边框效果 */
+.action-item::before,
+.action-item::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 30px;
+    background: repeating-linear-gradient(
+            90deg,
+            #1a1a1a 0px,
+            #1a1a1a 8px,
+            #333 8px,
+            #333 16px
+    );
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.action-item::before {
+    top: 0;
+    border-radius: 16px 16px 0 0;
+}
+
+.action-item::after {
+    bottom: 0;
+    border-radius: 0 0 16px 16px;
+}
+
+.action-item:hover::before,
+.action-item:hover::after {
+    opacity: 1;
+}
+
+/* 光晕效果 */
+.action-item .glow-effect {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120%;
+    height: 120%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.action-item:hover .glow-effect {
+    opacity: 1;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.3;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.1);
+        opacity: 0.5;
+    }
+}
+
+/* 序号徽章 */
+.action-badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    width: 45px;
+    height: 45px;
+    background: linear-gradient(135deg, #FFD569, #B0DCE6);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 800;
+    font-size: 18px;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.5);
+    z-index: 8;
+    transform: scale(0) rotate(-180deg);
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.action-item:hover .action-badge {
+    transform: scale(1) rotate(0deg);
+}
+
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 80px;
+    padding: 30px;
+    border:none;
+    position: relative;
+    z-index: 100;
+}
+
+.pagination-info {
+    color: #666;
+    font-size: 14px;
+    text-align: center;
+}
+
+.pagination-info span {
+    color: #DAA520;
+    font-weight: 600;
+    margin: 0 3px;
+}
+
+.pagelist {
+    display: flex;
+    gap: 8px;
+    list-style: none;
+    margin: 15px 0 0 0;
+    padding: 0;
+    justify-content: center;
+}
+
+.pagelist li a {
+    padding: 8px 14px;
+    border: 1px solid rgba(218, 165, 32, 0.4);
+    border-radius: 6px;
+    text-decoration: none;
+    color: #666;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.pagelist li a:hover {
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
+}
+box {
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    padding: 10px 50px;
+    border-radius: 8px;
+    font-size: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(255, 215, 0, 0.3);
+    display: flow;
+    align-items: center;
+    gap: 8px;
+    position: absolute;
+    top: 50px;
+    left: 500px;
+}
+.content-area {
+    margin-left: 240px;
+    padding: 40px 50px;
+    width: 700px;
+    min-height: calc(100vh - 90px);
+    position: absolute;
+    top: 150px;
+}
+
+.toolbar {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 15px;
+    position: absolute;
+    top: -40px;
+    left: 80px;
+}
+
+.btn-add {
+    background: linear-gradient(135deg, #FFD569, #B0DCE6);
+    border: none;
+    padding: 12px 28px;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-add:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(102, 126, 234, 0.4);
+}
+
+.data-table {
+    width: 1350px;
+    background: white;
+    border-collapse: collapse;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: absolute;
+    left: 70px;
+    top: 10px;
+}
+
+.data-table thead {
+    background: linear-gradient(135deg, #FFD569, #B0DCE6);
+}
+
+.data-table th {
+    background: linear-gradient( #FFD569, #B0DCE6 );
+    width: auto;
+    color: black;
+    padding: 10px 15px;
+    text-align: center;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.data-table td {
+    padding: 15px 15px;
+    border-bottom: 1px solid #eee;
+    text-align: center;
+}
+
+.data-table tbody tr {
+    transition: all 0.3s ease;
+}
+
+.data-table tbody tr:hover {
+    background-color: #f8f9ff;
+    transform: scale(1.005);
+}
+
+.data-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.btn-edit, .btn-delete {
+    padding: 6px 14px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 13px;
+    transition: all 0.3s ease;
+    border: 1px solid;
+    display: inline-block;
+}
+
+.btn-edit {
+    background: linear-gradient(135deg, #FFD569 0%, #B0DCE6 100%);
+    color: white;
+    border-color: #667eea;
+}
+
+.btn-edit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(102, 126, 234, 0.4);
+}
+
+.btn-delete {
+    color: #f5576c;
+    border-color: #f5576c;
+    background: white;
+}
+
+.btn-delete:hover {
+    background: #f5576c;
+    color: white;
+    box-shadow: 0 4px 8px rgba(245, 87, 108, 0.3);
+}
+box {
+    background: linear-gradient(135deg, #FFD569 0%, #B0DCE6 100%);
+    color: white;
+    border: none;
+    padding: 10px 50px;
+    border-radius: 8px;
+    font-size: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(102, 126, 234, 0.3);
+    display: flow;
+    align-items: center;
+    gap: 8px;
+    position: absolute;
+    top: 50px;
+    left: 500px;
+}

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <style type="text/css">
+        .fixed-user-area {
+            position: fixed;
+            top: 15px;
+            right: 25px;
+            z-index: 9999;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .fixed-user-area a {
+            text-decoration: none;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            backdrop-filter: blur(12px);
+            background: rgba(0, 0, 0, 0.55);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .fixed-user-area a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        /* 登录按钮 */
+        .fixed-user-area .login-btn {
+            color: #fff;
+            border: 1px solid rgba(102, 126, 234, 0.5);
+        }
+        .fixed-user-area .login-btn:hover {
+            background: #667eea;
+            border-color: #667eea;
+            color: #fff;
+        }
+
+        /* 退出按钮 */
+        .fixed-user-area .logout-btn {
+            color: #fff;
+            border: 1px solid rgba(231, 76, 60, 0.5);
+        }
+        .fixed-user-area .logout-btn:hover {
+            background: #e74c3c;
+            border-color: #e74c3c;
+            color: #fff;
+        }
+
+        /* 后台管理按钮 */
+        .fixed-user-area .admin-btn {
+            color: #FFD700;
+            border: 1px solid rgba(255, 215, 0, 0.5);
+        }
+        .fixed-user-area .admin-btn:hover {
+            background: #FFD700;
+            border-color: #FFD700;
+            color: #0a0a0a;
+        }
+
+        /* ===== 响应式（手机端适配） ===== */
+        @media (max-width: 768px) {
+            .fixed-user-area {
+                top: 10px;
+                right: 10px;
+                gap: 6px;
+            }
+            .fixed-user-area a {
+                font-size: 11px;
+                padding: 4px 12px;
+            }
+        }
+
+    </style>
+    <meta charset="UTF-8">
+    <title>留言</title>
+    <link rel="stylesheet" href="/local/css/main.css">
+    <link rel="stylesheet" href="/local/css/message.css">
+</head>
+<body>
+<!--  背景图像-->
+<div class="background-image">
+    <img th:src="@{/local/image/photos/top.jpg}" alt="首页主图" width="1635px" height="800px">
+    <div class="fixed-user-area">
+        <li th:if="${session.userRole != null and session.userRole == 'admin'}" style="list-style:none;">
+            <a th:href="@{/backFirst/first}" class="admin-btn">⚙️ 后台管理</a>
+        </li>
+        <li th:if="${session.userRole == null}" style="list-style:none;">
+            <a th:href="@{/admin/login}" class="login-btn">🔑 登录</a>
+        </li>
+        <li th:if="${session.userRole != null}" style="list-style:none;">
+            <a th:href="@{/admin/logout}" class="logout-btn">🚪 退出</a>
+        </li>
+    </div>
+</div>
+<div class="nav">
+    <ul class="navCon">
+        <h2>
+            <li class="dropdown">
+                <a th:href="@{/admin/index}" class="dropbtn">个人介绍</a>
+                <div class="dropdown-content">
+                    <a th:href="@{/admin/index}">个人介绍</a>
+                    <a th:href="@{/admin/performance}">演艺经历</a>
+                </div>
+            </li>
+            <li class="dropdown">
+                <!--<a th:href="@{/admin/music}" class="dropbtn"></a>-->
+                音乐作品
+                <div class="dropdown-content">
+                    <a th:href="@{/admin/music/ost}">OST</a>
+                    <a th:href="@{/admin/music/ep}">专辑</a>
+                    <a th:href="@{/admin/music/single}">单曲</a>
+                </div>
+            </li>
+            <li><a th:href="@{/admin/action}">影视作品</a></li>
+            <li><a th:href="@{/admin/word}">经典语录</a></li>
+            <li class="dropdown">
+                <!-- <a th:href="@{/admin/prize}" class="dropbtn"></a>-->
+                代言及奖项
+                <div class="dropdown-content">
+                    <a th:href="@{/admin/prize/endorsement}">代言</a>
+                    <a th:href="@{/admin/prize/achievement}">奖项</a>
+                </div>
+            </li>
+            <li><a th:href="@{/admin/concert}">演唱会</a></li>
+            <li>留言</li>
+            <!-- 👇 只有管理员才显示后台管理 -->
+            <!--<li th:if="${session.userRole != null and session.userRole == 'admin'}">
+                <a th:href="@{/admin/doLogin}">后台管理</a>
+            </li>-->
+        </h2>
+    </ul>
+</div>
+<div class="page-title">
+    <h1>给我留言</h1>
+    <h3>Leave A Message</h3>
+</div>
+<div class="message-container">
+    <!-- 留言表单 -->
+    <div class="message-form-section">
+        <div class="form-card">
+            <div class="form-header">
+                <span class="form-icon">✍️</span>
+                <h3>写下您的留言</h3>
+            </div>
+            <form th:action="@{/admin/message/add}" method="post" class="message-form">
+
+                <div class="form-group">
+                    <label for="name">您的昵称</label>
+                    <input type="text" id="name" name="name" placeholder="请输入您的昵称" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">您的邮箱</label>
+                    <input type="email" id="email" name="email" placeholder="请输入您的邮箱（选填）">
+                </div>
+                <div class="form-group">
+                    <label for="content">留言内容</label>
+                    <textarea id="content" name="content" placeholder="写下您想说的话..." required rows="5"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="submit-btn">
+                        <span class="btn-icon">💌</span>
+                        <span>发送留言</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 留言列表 -->
+    <div class="message-list-section">
+        <div class="list-header">
+            <span class="list-icon">💬</span>
+            <h3>留言墙 </h3>
+        </div>
+        <div class="message-list">
+            <div th:each="msg : ${messageList}" class="message-item">
+                <div class="message-avatar">
+                    <span class="avatar-text" th:text="${#strings.substring(msg.name, 0, 1)}">U</span>
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-name" th:text="${msg.name}">用户</span>
+                        <span class="message-time" th:text="${#temporals.format(msg.createTime, 'yyyy-MM-dd HH:mm')}"></span>
+                    </div>
+                    <div class="message-text" th:text="${msg.content}">这是一条留言内容...</div>
+                </div>
+            </div>
+            </div>
+            <div th:if="${#lists.isEmpty(message)}" class="empty-message">
+                <span class="empty-icon">📝</span>
+                <p>还没有留言，成为第一个留言的人吧！</p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

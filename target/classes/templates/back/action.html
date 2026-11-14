@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>影视剧作品</title>
+    <link rel="stylesheet" th:href="@{/local/css/backManage.css}">
+    <link rel="stylesheet" th:href="@{/local/css/action.css}">
+    <link rel="stylesheet" th:href="@{/local/css/page.css}">
+</head>
+<body>
+<div id="manager"><h2>LYN系统后台管理</h2></div>
+<div id="top" th:fragment="top">
+    <input id="bthFresh" type="button" value="刷新">
+    <form th:action="@{/admin/doLogin}">
+        <input id="logout" type="submit" value="退出登录">
+    </form>
+</div>
+<div id="left" th:fragment="left">
+    <div class="nav">
+        <ul class="navCon">
+            <li><a th:href="@{/loginBack/first}">首页</a></li>
+            <li>
+                <div class="dropdown">
+                    <a th:href="@{/loginBack/back/introduce}" class="dropbtn">个人介绍</a>
+                    <div class="dropdown-content">
+                        <a th:href="@{/loginBack/back/introduce}" target="_parent" title="introduce">个人介绍</a>
+                        <a th:href="@{/loginBack/back/perform}" target="_parent" title="performance">演艺经历</a>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="dropdown">
+                    <a th:href="@{/login/back/musicWork}" class="dropbtn">音乐作品</a>
+                    <div class="dropdown-content">
+                        <a th:href="@{/loginBack/back/ost}" target="_parent" title="ost">OST</a>
+                        <a th:href="@{/loginBack/back/ep}" target="_parent" title="ep">专辑</a>
+                        <a th:href="@{/loginBack/back/single}" target="_parent" title="single">单曲</a>
+                    </div>
+                </div>
+            </li>
+            <li><a th:href="@{#}">影视作品</a></li>
+            <li><a th:href="@{/loginBack/back/word}">经典语录</a></li>
+            <li>
+                <div class="dropdown">
+                    <a th:href="@{/loginBack/back/prize}" class="dropbtn">代言及奖项</a>
+                    <div class="dropdown-content" >
+                        <a th:href="@{/loginBack/back/endorsement}" target="_parent" title="endorsement">代言</a>
+                        <a th:href="@{/loginBack/back/achievement}" target="_parent" title="achievement">奖项</a>
+                    </div>
+                </div>
+            </li>
+            <li><a th:href="@{/loginBack/back/message}">评价管理</a></li>
+            <li><a th:href="@{/loginBack/back/system}">系统管理</a></li>
+        </ul>
+    </div>
+</div>
+<div id="actId" th:text="${actId}"></div>
+<div class="content-area">
+    <div class="toolbar">
+        <form th:action="@{/loginBack/back/toAddAction}" method="get">
+            <button type="submit" class="btn-add">
+                <span>+ 添加影视作品</span>
+            </button>
+        </form>
+    </div>
+    <table class="data-table">
+        <thead>
+        <tr>
+            <th style="width: 80px;">序号</th>
+            <th style="width: 150px;">名称</th>
+            <th>图片</th>
+            <th>视频</th>
+            <th style="width: 180px;">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${actionPage.list}">
+            <td th:text="${item.actId}"></td>
+            <td th:text="${item.name}"></td>
+            <td th:text="${item.image}"></td>
+            <td th:text="${item.videoPath}"></td>
+            <td>
+                <a th:href="@{'/loginBack/delAction?actId='+${item.actId}}"
+                   onclick="return confirm('确定要删除该条记录吗？')">删除</a>
+                <a th:href="@{'/loginBack/back/toEditAction?actId='+${item.actId}}">修改</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="pagination-container">
+    <div class="pagination-info">
+        <div th:with="path='/loginBack/back/action?pageNum='" style="position: absolute;bottom: 200px;left: 800px; margin-top: 20px;">
+            <div>
+                当前是第<span th:text="${actionPage.pageNum}"></span>页
+                共<span th:text="${actionPage.pages}"></span>页
+                共<span th:text="${actionPage.total}"></span>条记录
+            </div>
+            <ul class="pagelist">
+                <li>
+                    <a th:href="${path}+'1'">首页</a>
+                </li>
+                <li th:if="${actionPage.hasPreviousPage}">
+                    <a th:href="${path}+${actionPage.prePage}">上一页</a>
+                </li>
+                <li th:if="${actionPage.hasNextPage}">
+                    <a th:href="${path}+${actionPage.nextPage}">下一页</a>
+                </li>
+                <li th:if="${actionPage.pages > 1}">
+                    <a th:href="${path}+${actionPage.pages}">尾页</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</div>
+<div id="bottom">底部</div>
+</body>
+</html>

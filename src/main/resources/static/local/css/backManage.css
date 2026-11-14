@@ -1,0 +1,170 @@
+#top{
+    text-align: right;
+    height: 60px;
+    background-color:#150909;
+}
+.nav{
+    width: 15vw;
+    font: bold 22px "宋体";
+    color: white;
+    background-color:#150909;
+    height:800px;
+    padding-top: 60px;
+
+}
+.nav > li {
+    position: relative;
+    margin-right: 30px;
+}
+.navCon{
+    margin: 0px auto;
+    width: 200px;
+    height: 50px;
+    color: white;
+    background-color: #150909;
+}
+.navCon li{
+    list-style: none;
+    width: 130px;
+    height: 60px;
+    line-height: 70px;
+    float: left;
+    margin: 10px 0px;
+    color: honeydew;
+    text-align: left;
+}
+.navCon li a {
+    color: white;
+    text-align: center;
+    text-decoration: none;
+}
+/* 下拉 */
+.dropdown {
+    display: flex;
+    position: relative;
+}
+
+.dropdown .dropbtn {
+    color:white;
+    text-decoration: none;
+    display:flex;
+    padding: 5px 0;
+}
+
+/* 下拉内容默认隐藏 */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 200px;
+    background-color: #150909;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    z-index: 1000;
+    border-radius: 0 0 4px 4px;
+    overflow: hidden;
+}
+
+.dropdown-content a {
+    color: #150909;
+    border: 1px dotted white;
+    padding: 10px 15px;
+    text-align: center;
+    display:flex;
+}
+
+.dropdown-content a:hover {
+    background-color: #150909;
+}
+
+/* 悬停时显示下拉菜单 */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+table{										/*鲜花销售量*/
+    width:840px;
+    height: 300px;
+    position:absolute;
+    top: 450px;
+    left: 270px;
+    border-collapse: collapse;
+    color: black;
+    border: 1px solid gray;
+}
+tr:nth-child(2n){background: whitesmoke;}
+tr:nth-child(2n+1){background: darkgray;}
+tr:hover{background:lemonchiffon;}
+
+#bottom{
+    background-color:#150909;
+    text-align: center;
+    height: 30px;
+    width: 1640px;
+    position: absolute;
+    margin-left: 0px;
+    top: 898px;
+}
+/*新上市图片*/
+.newImage{
+    width: 50%;
+    height: 340px;
+    align-self: last baseline;
+    /*background-color: honeydew;*/
+    border: darkgray dotted 2px;
+    position: relative;
+    top: -760px;
+    left: 130px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    overflow-x: auto; /* 如果图片太多可以滚动 */
+    padding: 10px;
+    box-sizing: border-box;
+
+}
+.box1 {
+    color: #150909;
+    text-align: left;
+    padding-left: 10px;
+    margin-left: 10px;
+    line-height: 50px;
+    position: relative;
+    top: -780px;
+    left: 350px;
+    float: left;
+}
+/*最新评价*/
+.newComment{
+    width: 500px;
+    height: 710px;
+    align-self: last baseline;
+    /*background-color: #aaa;*/
+    border: darkgray dotted 2px;
+    position: relative;
+    top: -1100px;
+    left: 1105px;
+    overflow-x: auto; /* 如果图片太多可以滚动 */
+    padding: 10px;
+    box-sizing: border-box;
+}
+.newComment box0 {
+    font: 30px bold;
+    color: #150909;
+}
+text{color: #c2185b}
+
+#manager{
+    width:300px;
+    height: 20px;
+    color:aliceblue;
+    position:absolute;
+    top: 10px;
+    left: 60px;
+}
+.imgLogo{
+    position: relative;
+    left: 50px;
+    top: 100px;
+}
+
+

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <title>恭喜中奖</title>
+    <link rel="stylesheet" href="/local/css/login.css">
+</head>
+<body>
+<!--  背景图像-->
+<div class="background-image">
+    <img th:src="@{/local/image/photos/top.jpg}" alt="首页主图" width="1635px" height="800px">
+</div>
+<!--登录表单容器 -->
+<div class="container">
+    <div class="back-home">
+        <a th:href="@{/admin/index}">
+            ← 返回首页
+        </a>
+    </div>
+    <h2>管理系统登录</h2>
+   <!-- <div id="msg" th:if="${msg}" th:text="${msg}"></div>-->
+    <form th:action="@{/admin/login}" method="post">
+        <!-- 用户名输入框 -->
+        <div class="input-group">
+            <span class="icon-user"></span>
+            <input type="text" name="username" placeholder="用户名"><br>
+        </div>
+
+        <!-- 密码输入框 -->
+        <div class="input-group">
+            <span class="icon-lock"></span>
+            <input type="password" name="password" placeholder="密码"><br>
+        </div>
+
+        <div class="role-selector">
+            <input type="radio" name="role" value="user" id="roleUser" checked>
+            <label for="roleUser">普通用户</label>
+            <input type="radio" name="role" value="admin" id="roleAdmin">
+            <label for="roleAdmin">管理员</label>
+        </div>
+        <p class="role-tip">管理员可访问后台管理，普通用户仅可浏览</p>
+        <!-- 登录按钮 -->
+        <button type="submit" class="login-button">登录</button>
+    </form>
+    <!-- 注册链接 -->
+    <div class="register-link">
+        还没有账号？ <a th:href="@{/admin/register}">注册用户</a>
+    </div>
+</div>
+</body>
+</html>

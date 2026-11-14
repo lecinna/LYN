@@ -1,0 +1,756 @@
+/* ===== 电影字幕滚动风格 ===== */
+
+h2 {
+    color: dimgray;
+}
+li {
+    color: dimgray;
+}
+
+.dropdown-content:hover {
+    background-color: white;
+}
+.dropdown-content {
+    z-index: 999;
+}
+
+
+
+/* 星空背景 */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        radial-gradient(2px 2px at 20px 30px, #eee, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 60px 70px, #fff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 50px 160px, #ddd, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 90px 40px, #fff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 130px 80px, #fff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 160px 120px, #ddd, rgba(0,0,0,0));
+    background-repeat: repeat;
+    background-size: 200px 200px;
+    opacity: 0.3;
+    z-index: -1;
+    animation: twinkle 5s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+    0%, 100% {
+        opacity: 0.3;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+/* 月亮 */
+.moon {
+    position: fixed;
+    top: 100px;
+    right: 150px;
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle at 30% 30%, #fffef7, #f5f3e0);
+    border-radius: 50%;
+    box-shadow:
+        0 0 40px rgba(255, 255, 240, 0.6),
+        0 0 80px rgba(255, 255, 240, 0.4),
+        0 0 120px rgba(255, 255, 240, 0.2),
+        inset -10px -10px 20px rgba(0, 0, 0, 0.1);
+    z-index: -1;
+    animation: moonFloat 8s ease-in-out infinite;
+}
+
+.moon::before {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: 25px;
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(circle, rgba(0, 0, 0, 0.1), transparent);
+    border-radius: 50%;
+    box-shadow:
+        25px 15px 0 -3px rgba(0, 0, 0, 0.1),
+        15px 35px 0 -5px rgba(0, 0, 0, 0.1),
+        40px 40px 0 -4px rgba(0, 0, 0, 0.1);
+}
+
+.moon::after {
+    content: '';
+    position: absolute;
+    top: 50px;
+    left: 50px;
+    width: 15px;
+    height: 15px;
+    background: radial-gradient(circle, rgba(0, 0, 0, 0.08), transparent);
+    border-radius: 50%;
+}
+
+@keyframes moonFloat {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-20px) rotate(5deg);
+    }
+}
+
+/* 行星容器 */
+.planet {
+    position: fixed;
+    border-radius: 50%;
+    z-index: -1;
+}
+
+/* 行星1 - 蓝色星球 */
+.planet-1 {
+    top: 200px;
+    left: 100px;
+    width: 80px;
+    height: 80px;
+    background: radial-gradient(circle at 30% 30%, #4facfe, #00f2fe, #1e3c72);
+    box-shadow:
+        0 0 30px rgba(79, 172, 254, 0.5),
+        0 0 60px rgba(79, 172, 254, 0.3),
+        inset -10px -10px 20px rgba(0, 0, 0, 0.3);
+    animation: planetFloat1 12s ease-in-out infinite;
+}
+
+.planet-1::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(75deg);
+    width: 120px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+@keyframes planetFloat1 {
+    0%, 100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+    25% {
+        transform: translate(20px, -30px) rotate(90deg);
+    }
+    50% {
+        transform: translate(-10px, -50px) rotate(180deg);
+    }
+    75% {
+        transform: translate(-30px, -20px) rotate(270deg);
+    }
+}
+
+/* 行星2 - 红色星球 */
+.planet-2 {
+    bottom: 200px;
+    right: 100px;
+    width: 60px;
+    height: 60px;
+    background: radial-gradient(circle at 30% 30%, #ff6b6b, #ee5a6f, #c0392b);
+    box-shadow:
+        0 0 25px rgba(255, 107, 107, 0.5),
+        0 0 50px rgba(255, 107, 107, 0.3),
+        inset -8px -8px 15px rgba(0, 0, 0, 0.3);
+    animation: planetFloat2 10s ease-in-out infinite;
+}
+
+.planet-2::before {
+    content: '';
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    width: 10px;
+    height: 10px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+    box-shadow:
+        20px 10px 0 -2px rgba(0, 0, 0, 0.2),
+        10px 25px 0 -3px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes planetFloat2 {
+    0%, 100% {
+        transform: translate(0, 0) scale(1);
+    }
+    33% {
+        transform: translate(-25px, -35px) scale(1.05);
+    }
+    66% {
+        transform: translate(15px, -45px) scale(0.95);
+    }
+}
+
+/* 行星3 - 紫色小行星 */
+.planet-3 {
+    top: 50%;
+    left: 50px;
+    width: 40px;
+    height: 40px;
+    background: radial-gradient(circle at 30% 30%, #a78bfa, #8b5cf6, #6d28d9);
+    box-shadow:
+        0 0 20px rgba(167, 139, 250, 0.5),
+        0 0 40px rgba(167, 139, 250, 0.3),
+        inset -5px -5px 10px rgba(0, 0, 0, 0.3);
+    animation: planetFloat3 15s ease-in-out infinite;
+}
+
+@keyframes planetFloat3 {
+    0%, 100% {
+        transform: translate(0, 0);
+    }
+    20% {
+        transform: translate(30px, -40px);
+    }
+    40% {
+        transform: translate(50px, 0);
+    }
+    60% {
+        transform: translate(30px, 40px);
+    }
+    80% {
+        transform: translate(-20px, 20px);
+    }
+}
+
+/* 页面标题 - 电影开场 */
+.page-title {
+    text-align: center;
+    margin-top: 80px;
+    margin-bottom: 80px;
+    position: relative;
+    padding: 60px 0;
+}
+
+.page-title > h1 {
+    font-size: 64px;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: 15px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    position: relative;
+    display: inline-block;
+    text-shadow:
+        0 0 20px rgba(255, 255, 255, 0.5),
+        0 0 40px rgba(255, 255, 255, 0.3),
+        0 0 60px rgba(255, 255, 255, 0.2);
+    animation: titleGlow 3s ease-in-out infinite;
+}
+
+@keyframes titleGlow {
+    0%, 100% {
+        text-shadow:
+            0 0 20px rgba(255, 255, 255, 0.5),
+            0 0 40px rgba(255, 255, 255, 0.3),
+            0 0 60px rgba(255, 255, 255, 0.2);
+    }
+    50% {
+        text-shadow:
+            0 0 30px rgba(255, 255, 255, 0.8),
+            0 0 60px rgba(255, 255, 255, 0.5),
+            0 0 90px rgba(255, 255, 255, 0.3);
+    }
+}
+
+.page-title > h1::before {
+    content: '🎬';
+    position: absolute;
+    left: -100px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 60px;
+    animation: clapboard 2s ease-in-out infinite;
+}
+
+.page-title > h1::after {
+    content: '🎬';
+    position: absolute;
+    right: -100px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 60px;
+    animation: clapboard 2s ease-in-out infinite 0.5s;
+}
+
+@keyframes clapboard {
+    0%, 100% {
+        transform: translateY(-50%) rotate(0deg);
+    }
+    25% {
+        transform: translateY(-50%) rotate(-15deg);
+    }
+    75% {
+        transform: translateY(-50%) rotate(15deg);
+    }
+}
+
+.page-title > h3 {
+    color: #888;
+    font-size: 20px;
+    letter-spacing: 10px;
+    font-weight: 300;
+    text-transform: uppercase;
+    margin-top: 25px;
+    font-family: "Courier New", monospace;
+}
+
+/* 胶片边框装饰 */
+.page-title::before,
+.page-title::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background: repeating-linear-gradient(
+        90deg,
+        #1a1a1a 0px,
+        #1a1a1a 20px,
+        #2a2a2a 20px,
+        #2a2a2a 40px
+    );
+    opacity: 0.5;
+}
+
+.page-title::before {
+    top: 0;
+}
+
+.page-title::after {
+    bottom: 0;
+}
+
+/* 语录容器 - 电影字幕 */
+.words-container {
+    max-width: 900px;
+    margin: 0 auto 100px;
+    padding: 0 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    position: relative;
+}
+
+/* 语录卡片 - 字幕条 */
+.word-card {
+    position: relative;
+    background: transparent;
+    padding: 40px 50px;
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    cursor: pointer;
+    overflow: hidden;
+    opacity: 0;
+    animation: subtitleFade 1s ease forwards;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.word-card:nth-child(1) { animation-delay: 0.2s; }
+.word-card:nth-child(2) { animation-delay: 0.4s; }
+.word-card:nth-child(3) { animation-delay: 0.6s; }
+.word-card:nth-child(4) { animation-delay: 0.8s; }
+.word-card:nth-child(5) { animation-delay: 1s; }
+.word-card:nth-child(6) { animation-delay: 1.2s; }
+.word-card:nth-child(7) { animation-delay: 1.4s; }
+.word-card:nth-child(8) { animation-delay: 1.6s; }
+
+@keyframes subtitleFade {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+        filter: blur(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+    }
+}
+
+/* 语录内容 - 大字号字幕 */
+.word-content {
+    position: relative;
+    z-index: 2;
+}
+
+.word-content p {
+    margin: 0;
+    color: #fff;
+    font-size: 24px;
+    line-height: 1.8;
+    font-weight: 300;
+    letter-spacing: 2px;
+    text-align: center;
+    font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+    transition: all 0.4s ease;
+}
+
+.word-card:hover .word-content p {
+    color: lemonchiffon;
+    text-shadow:
+        0 0 20px rgba(0, 255, 136, 0.5),
+        0 0 40px rgba(0, 255, 136, 0.3);
+    transform: scale(1.02);
+}
+
+/* 光晕扫过效果 */
+.word-card .glow {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.05) 50%,
+        transparent 100%
+    );
+    transition: left 0.8s ease;
+    pointer-events: none;
+}
+
+.word-card:hover .glow {
+    left: 100%;
+}
+
+/* 底部渐隐 */
+.words-container::after {
+    content: '';
+    display: block;
+    height: 100px;
+    background: linear-gradient(to bottom, transparent, #0a0a0a);
+    margin-top: 50px;
+}
+
+/* 响应式设计 */
+@media screen and (max-width: 1200px) {
+    .moon {
+        width: 80px;
+        height: 80px;
+        right: 100px;
+    }
+
+    .planet-1 {
+        width: 60px;
+        height: 60px;
+        left: 60px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .page-title {
+        margin-top: 60px;
+        margin-bottom: 60px;
+    }
+
+    .page-title > h1 {
+        font-size: 42px;
+        letter-spacing: 8px;
+    }
+
+    .page-title > h1::before,
+    .page-title > h1::after {
+        display: none;
+    }
+
+    .page-title > h3 {
+        font-size: 16px;
+        letter-spacing: 6px;
+    }
+
+    .words-container {
+        padding: 0 25px;
+        gap: 40px;
+    }
+
+    .word-card {
+        padding: 30px 25px;
+    }
+
+    .word-content p {
+        font-size: 20px;
+        letter-spacing: 1px;
+    }
+
+    .moon {
+        width: 60px;
+        height: 60px;
+        top: 80px;
+        right: 60px;
+    }
+
+    .planet-1 {
+        width: 50px;
+        height: 50px;
+        top: 150px;
+        left: 40px;
+    }
+
+    .planet-2 {
+        width: 45px;
+        height: 45px;
+        right: 60px;
+        bottom: 150px;
+    }
+
+    .planet-3 {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .page-title > h1 {
+        font-size: 32px;
+        letter-spacing: 5px;
+    }
+
+    .page-title > h3 {
+        font-size: 14px;
+        letter-spacing: 4px;
+    }
+
+    .words-container {
+        padding: 0 20px;
+    }
+
+    .word-card {
+        padding: 25px 20px;
+    }
+
+    .word-content p {
+        font-size: 18px;
+        line-height: 1.7;
+    }
+
+    .moon {
+        width: 50px;
+        height: 50px;
+        top: 60px;
+        right: 40px;
+    }
+
+    .planet-1,
+    .planet-2 {
+        display: none;
+    }
+}
+
+/* 打印样式 */
+@media print {
+    body {
+        background: white;
+        color: black;
+    }
+
+    .moon,
+    .planet {
+        display: none;
+    }
+
+    .word-card {
+        border-bottom: 1px solid #ddd;
+    }
+
+    .word-content p {
+        color: black;
+        text-shadow: none;
+    }
+}
+
+
+.content-area {
+    margin-left: 240px;
+    padding: 40px 50px;
+    width: 700px;
+    min-height: calc(100vh - 90px);
+    position: absolute;
+    top: 150px;
+}
+
+.toolbar {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 15px;
+    position: absolute;
+    top: -40px;
+    left: 80px;
+}
+
+.btn-add {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-add:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(102, 126, 234, 0.4);
+}
+
+.data-table {
+    width: 1350px;
+    background: white;
+    border-collapse: collapse;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: absolute;
+    left: 70px;
+    top: 10px;
+}
+
+.data-table thead {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.data-table th {
+    background: transparent;
+    width: auto;
+    color: white;
+    padding: 10px 15px;
+    text-align: center;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.data-table td {
+    padding: 15px 15px;
+    border-bottom: 1px solid #eee;
+    text-align: center;
+}
+
+.data-table tbody tr {
+    transition: all 0.3s ease;
+}
+
+.data-table tbody tr:hover {
+    background-color: #f8f9ff;
+    transform: scale(1.005);
+}
+
+.data-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.btn-edit, .btn-delete {
+    padding: 6px 14px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 13px;
+    transition: all 0.3s ease;
+    border: 1px solid;
+    display: inline-block;
+}
+
+.btn-edit {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-color: #667eea;
+}
+
+.btn-edit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(102, 126, 234, 0.4);
+}
+
+.btn-delete {
+    color: #f5576c;
+    border-color: #f5576c;
+    background: white;
+}
+
+.btn-delete:hover {
+    background: #f5576c;
+    color: white;
+    box-shadow: 0 4px 8px rgba(245, 87, 108, 0.3);
+}
+
+/*.pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    padding: 20px;
+    background: rgba(15, 23, 42, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 2px 15px rgba(102, 126, 234, 0.2);
+    border: 1px solid rgba(102, 126, 234, 0.3);
+}*/
+
+.pagination-info {
+    color: #1b2735;
+    font-size: 14px;
+    text-align: center;
+}
+
+.pagination-info span {
+    color: #a78bfa;
+    font-weight: 600;
+    margin: 0 3px;
+}
+
+.pagelist {
+    display: flex;
+    gap: 8px;
+    list-style: none;
+    margin: 15px 0 0 0;
+    padding: 0;
+    justify-content: center;
+}
+
+.pagelist li a {
+    padding: 8px 14px;
+    border: 1px solid rgba(167, 139, 250, 0.4);
+    border-radius: 6px;
+    text-decoration: none;
+    color: #cbd5e1;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.pagelist li a:hover {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+box {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 10px 50px;
+    border-radius: 8px;
+    font-size: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(102, 126, 234, 0.3);
+    display: flow;
+    align-items: center;
+    gap: 8px;
+    position: absolute;
+    top: 50px;
+    left: 500px;
+}
